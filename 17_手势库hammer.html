@@ -20,52 +20,67 @@
   <div class="box"></div>
 
   <script>
-    let timer = null;
-    let $topTip = null;
-    function topTip(msg) {
-      if (!timer) {
-        $topTip = $('<div>');
-        $topTip.css({ 'position': 'fixed', 'top': 0, 'width': '100%', 'font-size': '14px', 'color': 'white', 'background-color': 'black' });
-        $topTip.text(msg);
-        $('body').append($topTip);
-      } else {
-        clearTimeout(timer);
-        $topTip.text(msg);
-      }
-      timer = setTimeout(function () {
-        $topTip.remove(); 
+    function bottomTip(msg) {
+      const $bottomTip = $('<div>');
+      $bottomTip.css({ 'position': 'fixed', 'bottom': 0, 'width': '100%', 'font-size': '14px', 'color': 'white', 'background-color': 'black' });
+      $bottomTip.text(msg);
+      $('body').append($bottomTip);
+      const timer = setTimeout(function () {
+        $bottomTip.remove(); 
         timer = null;
-      }, 5000);
+      }, 3000);
     }
 
     $(document).ready(function () {
       var hammertime = new Hammer($('.box')[0], {});
 
       hammertime.on('tap', function (e) {
-        topTip('tap');
-        e.preventDefault();
+        bottomTip('tap');
+        // e.preventDefault();
       });
 
       hammertime.on('doubletap', function (e) {
-        topTip('doubletap');
-        e.preventDefault();
+        bottomTip('doubletap');
+        // e.preventDefault();
       });
 
       hammertime.on('press', function (e) {
-        topTip('press');
-        e.preventDefault();
+        bottomTip('press');
+        // e.preventDefault();
       });
 
       hammertime.on('swipe', function (e) {
-        topTip('swipe');
-        e.preventDefault();
+        bottomTip('swipe');
+        // e.preventDefault();
       });
 
+      /**
+        在指定的dom区域内，一个手指放下并移动事件，即触屏中的拖动事件。这个事件在屏触开发中比较常用，如：左拖动、右拖动等，如手要上使用QQ时向右滑动出现功能菜单的效果。该事件还可以分别对以下事件进行监听并处理：
+        Panstart：拖动开始、Panmove：拖动过程、Panend：拖动结束、Pancancel：拖动取消、Panleft：向左拖动、Panright：向右拖动、Panup：向上拖动、Pandown：向下拖动
+      */
       hammertime.on('pan', function (e) {
-        topTip('pan');
-        e.preventDefault();
+        bottomTip(`[pan]: X偏移量：${e.deltaX}，Y偏移量：${e.deltaY}`);
+        // e.preventDefault();
       });
 
+      /**
+        Pinch事件：在指定的dom区域内，两个手指（默认为两个手指，多指触控需要单独设置）或多个手指相对（越来越近）移动或相向（越来越远）移动时事件。该事件事以分别对以下事件进行监听并处理：
+        Pinchstart：多点触控开始、Pinchmove：多点触控过程、Pinchend：多点触控结束、Pinchcancel：多点触控取消、Pinchin：多点触控时两手指距离越来越近、Pinchout：多点触控时两手指距离越来越远
+      */
+      hammertime.on('pinch', function (e) {
+        bottomTip(`[pinch]: X偏移量：${e.deltaX}，Y偏移量：${e.deltaY}`);
+        // e.preventDefault();
+      });
+
+
+      hammertime.on('rotate', function (e) {
+        bottomTip(`[rotate]: X偏移量：${e.deltaX}，Y偏移量：${e.deltaY}`);
+        // e.preventDefault();
+      });
+
+
+      hammertime.get('pinch').set({ enable: true });
+      hammertime.get('rotate').set({ enable: true });
       hammertime.get('pan').set({ direction: Hammer.DIRECTION_ALL });
       hammertime.get('swipe').set({ direction: Hammer.DIRECTION_VERTICAL });
     });
