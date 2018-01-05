@@ -40,8 +40,6 @@
 
     $(document).ready(function () {
       var hammertime = new Hammer($('.box')[0], {});
-      hammertime.get('pan').set({ direction: Hammer.DIRECTION_ALL });
-      hammertime.get('swipe').set({ direction: Hammer.DIRECTION_VERTICAL });
 
       hammertime.on('tap', function (e) {
         topTip('tap');
@@ -68,6 +66,8 @@
         e.preventDefault();
       });
 
+      hammertime.get('pan').set({ direction: Hammer.DIRECTION_ALL });
+      hammertime.get('swipe').set({ direction: Hammer.DIRECTION_VERTICAL });
     });
 
     
