@@ -7,10 +7,10 @@
   <title>hammer.js</title>
   <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
   <script src="https://cdn.bootcss.com/hammer.js/2.0.8/hammer.js"></script>
-  <style type="test/css">
+  <style type="text/css">
     .box {
       margin: 30px auto;
-      width: 400px;
+      width: 300px;
       height: 200px;
       background-color: orange;
     }
@@ -41,30 +41,31 @@
     $(document).ready(function () {
       var hammertime = new Hammer($('.box')[0], {});
 
-      hammertime.on('tap', function (ev) {
-        console.log('tap');
+      hammertime.on('tap', function (e) {
+        topTip('tap');
+        e.preventDefault();
       });
 
-      hammertime.on('doubletap', function (ev) {
-        console.log('doubletap');
+      hammertime.on('doubletap', function (e) {
+        topTip('doubletap');
+        e.preventDefault();
       });
 
-      hammertime.on('press', function (ev) {
-        console.log('press');
+      hammertime.on('press', function (e) {
+        topTip('press');
+        e.preventDefault();
       });
 
-      hammertime.on('swipe', function (ev) {
-        console.log('swipe');
+      hammertime.on('swipe', function (e) {
+        topTip('swipe');
+        e.preventDefault();
       });
 
-      hammertime.on('pan', function (ev) {
-        console.log('pan-1');
+      hammertime.on('pan', function (e) {
+        topTip('pan');
+        e.preventDefault();
       });
 
-
-      hammertime.on('pan', function (ev) {
-        console.log('pan-2');
-      });
     });
 
     
