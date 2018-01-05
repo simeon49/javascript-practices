@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>练习</title>
+	<meta charset="utf-8">
+</head>
+<body>
+<form method="post" action="" onsubmit="return checkForm()">
+	<div><p style="clear:both;color:red;display:none;"id="tips"></p></div>
+	<div>用户名: <input type="text" name="username" id="username" onfocus="clearTips()" onblur="checkName();"/></div>
+	<div>密码: <input type="password" name="password1" id="password1" onfocus="clearTips()" onblur="checkPwd1();"/></div>
+	<div>确认密码: <input type="password" name="password2" id="password2" onfocus="clearTips()" onblur="checkPwd();"/></div>
+	<div>Email: <input type="text" name="email" id="email" onfocus="clearTips()" onblur="checkEmail();"/></div>
+	<div>手机: <input type="text" name="phonenumber" id="phonenumber" onfocus="clearTips()" onblur="checkPhoneN();"></div>
+	<div>验证码: <input type="text" name="vcode" id="vcode" onfocus="clearTips()" onblur="checkVcode()"/><img src=""></div>
+	<div><input type="submit" value="提交" id="submit" /></div>
+</form>
+</body>
+	<script type="text/javascript">
+	function showTips(str) {
+		var tip_obj = document.getElementById("tips");
+		tip_obj.style.display = "block";
+		tip_obj.innerHTML = str;
+		document.getElementById('submit').disabled = true;
+	}
+	function clearTips() {
+		var tip_obj = document.getElementById("tips");
+		tip_obj.style.display = "none";
+		tip_obj.innerHTML = "";
+		document.getElementById("submit").disabled = false;
+	}
+	function checkForm() {
+		if (checkName() && checkPwd() && checkEmail() && checkPhoneN() && checkVcode()) {
+			return true;
+		}
+		return false;
+	}
+	function checkName() {
+		var username = document.getElementById("username").value;
+		if (isNull(username)) {
+			showTips("用户名不能为空");
+			return false;
+		}
+		return true;
+	}
+	function checkPwd1() {
+		var pwd1 = document.getElementById("password1").value;
+		if (pwd1.length < 7) {
+			showTips("密码长度不可以小于7");
+			return false;
+		}
+		return true;
+	}
+	function checkPwd() {
+		var pwd1 = document.getElementById("password1").value;
+		var pwd2 = document.getElementById("password2").value;
+		if (checkPwd1()) {
+			if (pwd1 != pwd2) {
+				showTips("两次输入的密码不同");
+				return false
+			}
+			return true;
+		}
+		return false;
+	}
+	function checkEmail() {
+		var email = document.getElementById("email").value;
+		var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
+		if (!reg.test(email)) {
+			showTips("邮箱格式不正确");
+			return false;
+		}
+		return true;
+	}
+	function checkPhoneN() {
+		var phonenumber = document.getElementById("phonenumber").value;
+		var reg = /^1[3|4|5|8][0-9]{9}$/g;
+		if (!reg.test(phonenumber)) {
+			showTips("手机号码不正确");
+			return false;
+		}
+		return true;
+	}
+	function checkVcode() {
+		var obj = document.getElementById("vcode");
+		if (obj.value.length != 4) {
+			showTips("验证码不正确");
+			return false;
+		}
+		return true;
+	}
+	function isNull(str) {
+		if (str == "") return true;
+		return /^[ ]+$/.test(str);
+	}
+	</script>
+</html>

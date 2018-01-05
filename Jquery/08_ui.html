@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JQuery UI</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+	<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+	<style type="text/css">
+	.block {
+		width: 50px;
+		height: 50px;
+		background-color: yellow;
+	}
+	.drop {
+		width: 50px;
+		height: 50px;
+		border: 2px dotted black;
+	}
+	.active {
+		border: 2px solid red;
+	}
+	.hover {
+		background-color: red;
+	}
+	li {
+		background-color: #e5e5e5;
+		list-style-type: none;
+		margin-bottom: 5px;
+	}
+	.ui-selected {
+		background-color: blue;
+	}
+	</style>
+</head>
+<body>
+<div>
+	<div id="block" class="block">Block</div>
+	<div class="drop">Drop</div>
+	<ul id="list">
+		<li>1</li>
+		<li>2</li>
+		<li>3</li>
+		<li>4</li>
+	</ul>
+	<div id="accordion">
+	    <h3>Section 1</h3>
+	    <div>
+			<p>
+	        Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
+	        ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit
+	        amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut
+	        odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
+	        </p>
+	    </div>
+	    <h3>Section 2</h3>
+	    <div>
+	        <p>
+	        Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet
+	        purus. Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor
+	        velit, faucibus interdum tellus libero ac justo. Vivamus non quam. In
+	        suscipit faucibus urna.
+	        </p>
+	    </div>
+	    <h3>Section 3</h3>
+	    <div>
+	        <p>
+	        Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis.
+	        Phasellus pellentesque purus in massa. Aenean in pede. Phasellus ac libero
+	        ac tellus pellentesque semper. Sed ac felis. Sed commodo, magna quis
+	        lacinia ornare, quam ante aliquam nisi, eu iaculis leo purus venenatis dui.
+	        </p>
+	        <ul>
+	            <li>List item one</li>
+	            <li>List item two</li>
+	            <li>List item three</li>
+	        </ul>
+	    </div>
+	    <h3>Section 4</h3>
+	    <div>
+	        <p>
+	        Cras dictum. Pellentesque habitant morbi tristique senectus et netus
+	        et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in
+	        faucibus orci luctus et ultrices posuere cubilia Curae; Aenean lacinia
+	        mauris vel est.
+	        </p>
+	        <p>
+	        Suspendisse eu nisl. Nullam ut libero. Integer dignissim consequat lectus.
+	        Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
+	        inceptos himenaeos.
+	        </p>
+	    </div>
+	</div>
+	<div id="slider"></div>
+	<div id="dialog" title="Maize dialog">
+        <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+	$(document).ready(function(){
+		// 拖拽
+		$("#block").draggable({"helper":"clone", "opacity":"0.5"});
+
+		// 改变大小
+		$("#block").resizable();
+
+		// 放置
+		$(".drop").droppable({
+			accept: ".block",
+			activeClass: "active",
+			hoverClass: "hover",
+			drop: function(ev, ui) {
+				$(this).append("<br/>Ok");
+			}
+		});
+
+		// 排序
+		$("#list").sortable({"axis":"y"});
+
+		// 选择
+		$("#list").selectable();
+
+		// 滑动条
+		$("#slider").slider({step:10});
+
+		// 折叠菜单
+		$("#accordion").accordion({"collapsible":"true"});
+
+		// 对话框
+		$("#dialog").dialog({
+			buttons: [{
+				text: "Ok",
+				click: function() {
+				$( this ).dialog( "close" );
+			    }
+			}]
+		});
+
+		$("#slider").on("slidechange", function(event, ui) {
+			alert("Value: "+ui.value);
+			debugger;
+			// $("#slider").slider("destroy");
+		});
+	});
+</script>
+</html>

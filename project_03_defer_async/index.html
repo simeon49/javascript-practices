@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>script 加载与运行 defer async</title>
+    <script async type="text/javascript" src="./js/s1.js"></script>
+    <script async type="text/javascript" src="./js/s2.js"></script>
+    <script defer type="text/javascript" src="./js/s3.js"></script>
+</head>
+<body>
+    
+</body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () { // jquery 的ready
+            // document.write('<p>DOM content load 完成</p>')
+            console.log(performance.now(), 'DOM content load 完成');
+            document.removeEventListener('DOMContentLoaded', arguments.callee);
+        });
+
+        window.onload = function () {
+            // document.write('<p>Window load 完成</p>')
+            console.log(performance.now(), 'Window load 完成');
+        }
+
+        
+    </script>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Timer</title>
+	<meta charset="utf-8">
+</head>
+<script type="text/javascript">
+	/////////////////////////////
+	// var t = setTimeout("func", 毫秒) // 执行一次
+	// clearTimeout(t)
+	// 
+	// var t = setInterval("func", 毫秒) // 每隔一段时间执行一次
+	// clearInterval(t)
+	/////////////////////////////
+
+	// var t1 = setTimeout("alert('2s')", 2000);
+	// clearTimeout(t1);
+	// var t2 = setInterval("alert('2s')", 2000);
+	// clearInterval(t2);
+
+	var g_timer;
+	var g_count = 0;
+	var g_status = 'p';
+	function counting() {
+		g_count += 1;
+		document.getElementById("txt").value = g_count;
+	}
+	function starPauseCounting() {
+		if (g_status == 'p') {
+			g_timer = setInterval('counting()', 1000);
+			g_status = 's';
+			document.getElementById("start_pause").value = "暂停计时";
+		} else {
+			clearInterval(g_timer);
+			g_status = 'p';
+			document.getElementById("start_pause").value = "开始计时";
+		}
+		
+	}
+	function stopCounting() {
+		clearInterval(g_timer);
+		g_count = 0;
+		g_status = 'p';
+	}
+</script>
+<body>
+	<input type="text" id="txt" value="0"/><br/>
+	<input type="button" id="start_pause" value="开始计时" onclick="javascript:starPauseCounting()"/>
+	<input type="button" value="停止计时" onclick="javascript:stopCounting()"/>
+</body>
+</html>

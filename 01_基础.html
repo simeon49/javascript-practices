@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hello JavaScript</title>
+	<meta charset="utf-8">
+	<script type="text/javascript">
+		/* 	数据类型 
+			1.基本类型
+				undefined
+				null
+				boolean: true false
+				number: 整数, 浮点数
+				string: 字符串
+			2.复杂类型
+				object: 对象
+
+			检测变量数据类型:
+			typeof
+
+		*/
+		// var msg;
+		// document.write("var msg; msg == undefined is ");
+		// document.write(msg == undefined);
+		// document.write("<br>typeof(msg) is ");
+		// document.write(typeof(msg));
+		// document.write("<br>Boolean(msg) is ");
+		// document.write(Boolean(msg));
+		// msg = "Hi";
+		// document.write("<br>msg=\"Hi\";");
+		// document.write("<br>Boolean(msg) is ");
+		// document.write(Boolean(msg));
+
+		// var obj = null;
+		// document.write("<br><br>var obj=null; typeof(obj) is ");
+		// document.write(typeof(obj));
+		// document.write("<br>Boolean(obj) is ");
+		// document.write(Boolean(obj));
+
+		// // Nan  (not a number) 它与任何数值都不相等 包括自己本身
+		// document.write("<br><br>NaN == NaN is ");
+		// document.write(NaN == NaN);
+
+		// msg = NaN;
+		// document.write(msg);
+		
+		/*
+			变量:
+				如果变量前不加var 则为全局变量
+		 */
+		// var  scope = "global<br>";
+		// function test() {
+		// 	var scope = "local<br>";	// 此处不加 var时 结果会打印2个local
+		// 	document.write(scope);
+		// }
+		// test();
+		// document.write(scope);
+		
+
+		/*
+			运算符:
+		 */
+		// var num_1 = 12;
+		// var num_2 = "20";
+		// var sum = num_1 + num_2;
+		// document.write(sum + "<br>");
+		// if (num_1 <= num_2) {
+		// 	document.write(num_1 + " <= " + num_2 + "<br>");
+		// };
+		// document.write("num_1 === 12 is " + (num_1 === 12) + "<br>");
+		// document.write("max(12, 32): " + ((12 > 32)?12:32) + "<br>");
+		 
+		/*
+			条件控制语句
+		 */
+		// var num_1 = 1, num_2 = 2;
+		// if (num_1 < num_2) {
+		// 	document.write(num_1 + " < " + num_2);
+		// } else if(num_1 == num_2) {
+		// 	document.write(num_1 + " == " + num_2);
+		// } else {
+		// 	document.write(num_1 + " > " + num_2);
+		// }
+		// document.write("<br>");
+
+		// switch('b'){
+		// 	case 'a':
+		// 		document.write('a');
+		// 		break;
+		// 	case 'b':
+		// 		document.write('b');
+		// 		break;
+		// 	case 'c':
+		// 		document.write('c');
+		// 		break;
+		// 	default:
+		// 		document.write("Unknow")
+		// 		break;
+	
+		/*
+			循环
+		 */
+		// var num = 5;
+		// while (num) {
+		// 	document.write(num);
+		// 	num -= 1;
+		// }
+		// document.write("<br>");
+
+		// for (var i = 5; i > 0; i --) {
+		// 	if (i < 3) {
+		// 		break;
+		// 	}
+		// 	document.write(i);
+		// }
+		// document.write("<br>");
+
+		/*
+			弹出窗口
+		 */
+		// alert("alert");
+		// if (confirm("Are you sure?")) {
+		// 	document.write("Ok");
+		// } else {
+		// 	document.write("No");
+		// }
+		// var name = prompt("Your name", "Qi");
+		// if (name) {
+		// 	document.write("Hi " + name);
+		// }
+		// function openNewWins() {
+		// 	window.open('http://www.baidu.com', 'The title', 'width=100, height=100, top=50, left=50, location=no, resizeable=no;');
+		// }
+		
+		/*
+			函数
+			function 开头, 大小写铭感, 参数可有可无, 参数feu值传递
+
+		 */
+		// eval(str) 将str当作命令执行 
+		// var str = "4+3";
+		// document.write(str+'='+eval(str)+"<br/>");
+
+		// sum = function(a, b) {
+		// 	document.write(a+"+"+b+'='+(a+b)+"<br/>");
+		// }
+		// sum(3, 4);
+
+		/*
+			数组
+		 */
+		// 创建数组
+		// var a1 = [1, 2, 3, 4, "haha"];
+		// document.write("a1["+a1+"], a1.length="+a1.length+"<br/>");
+		// var a2 = [5];
+		// document.write("a2["+a2+"], a2.length="+a2.length+"<br/>");
+		// var a3 = new Array(2, 3, 4, 5);
+		// document.write("a3=new Array("+a3+"), a3.length="+a3.length+"<br/>");
+		// var a4 = new Array(5);
+		// document.write("a4=new Array(5), a4.length="+a4.length+"<br/>");
+
+		// document.write("<br/><br/><br/><br/>");
+		// // 索引 从0开始
+		// var a5 = [1, 2, 3, 4];
+		// a5[100] = 101;
+		// document.write("a5=["+a5+"], a5.length="+a5.length+"<br/>");
+		// a5.length = 10;
+		// document.write("a5=["+a5+"], a5.length="+a5.length+"<br/>");
+
+		// document.write("<br/><br/><br/><br/>");
+		// // 常用方法
+		// var a6 = [1, 2, 3, 4, 5];
+		// document.write("Join:"+ a6.join(',')+"<br/>");
+		// document.write("Slice:"+a6.slice(1, 3)+"<br/>"); // [1-3)
+		// var a7 = a2.concat(a1, a2);
+		// document.write(a1 + "<br/>");
+		// document.write(a2 + "<br/>");
+		// document.write(a7 + "<br/>");
+		// a1.reverse();
+		// document.write("After Reverse: a1=[" + a1 + "]<br/>");
+		// a1.sort(function(v1, v2){return v1-v2;});
+		// document.write("After Sort: a1=["+a1+"]<br/>");
+		// delete a1[4]; 	// 删除元素 但不改变数组长度
+		// document.write("After delete a1[4]: a1=["+a1+"], a1.length="+a1.length+"<br/>");
+		
+		// // 栈方法
+		// a1.push(5);
+		// document.write("After a1.push(5): a1=["+a1+"], a1.length="+a1.length+"<br/>");
+		// a1.pop();
+		// document.write("After a1.pop(): a1=["+a1+"], a1.length="+a1.length+"<br/>");
+		
+		// //队列方法
+		// a1.unshift("a");
+		// document.write("After a1.unshift('a'): a1=["+a1+"], a1.length="+a1.length+"<br/>");
+		// a1.shift();
+		// document.write("After a1.shift(): a1=["+a1+"], a1.length="+a1.length+"<br/>");
+
+
+		/*
+			对象
+		 */
+		// function Person(first_name, second_name) {
+		// 	this.first_name = first_name;
+		// 	this.second_name = second_name;
+		// }
+		// person = new Person("Li", "Ming");
+		// person.changeFirstName = function(first_name) {
+		// 	this.first_name = first_name;
+		// }
+		// document.write("first_name: "+ person.first_name+"<br/>");
+		// person.changeFirstName("Hong");
+		// document.write("first_name: "+ person.first_name+"<br/>");
+		// ////////////////////
+		// // prototype 模式 //
+		// ////////////////////
+		// Person.prototype.relax = function(){
+		// 	document.write("go to sleep...<br/>");
+		// };
+		// person_1 = new Person("li", "ming");
+		// person_2 = new Person("xiao", "hong");
+		// person_1.relax();
+		// person_2.relax();
+		// document.write("person_1.relax==person_2.relax is "+ 
+		// 	(person_1.relax == person_2.relax)+"<br/>");
+		// ////////////
+		// // 常用方法 //
+		// ////////////
+		// // 实例与对象关系
+		// document.write("Person.prototype.isPrototypeOf(person_1)="+Person.prototype.isPrototypeOf(person_1)+"<br/>");
+		// // 实例是否拥有一个属性
+		// document.write("person_1.hasOwnProperty('first_name')="+person_1.hasOwnProperty("first_name")+"<br/>");
+		// document.write("person_1.hasOwnProperty('relax')="+person_1.hasOwnProperty("relax")+"<br/>");
+	</script>
+	<!-- firfox: about:config  javascript.enabled=false -->
+	<noscript>无法加载JavaScript</noscript> 
+</head>
+<body>
+	<!-- 弹出窗口 -->
+	<!-- <input type="button" value="打开新窗口" onclick="javascript:openNewWins();">
+	<input type="button" value="删除" onclick="javascript:confirm('Are you sure?');">
+	<input type="button" value="刷新" onclick="javascript:window.location.reload();"> -->
+</body>
+</html>

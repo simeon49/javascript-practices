@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>js-02</title>
+    <style type="text/css">
+        #box {
+            width: 100px;
+            height: 100px;
+            background: green;
+            transition: all 3s;
+        }
+
+        #ball {
+            width: 50px;
+            height: 50px;
+            border: 2px solid #777;
+            border-radius: 50%;
+            position: absolute;
+            top: 0px;
+            left: 400px;
+            transition: all 50;
+        }
+    </style>
+    <script type="text/javascript">
+        window.onload = () => {
+            var boxDom = document.getElementById('box');
+            var btnDom = document.getElementById('btn');
+            var ballDom = document.getElementById('ball');
+            var btnBallDom = document.getElementById('btn-ball');
+
+            btnDom.onclick = () => {
+                boxDom.style.width = '500px';
+            };
+
+            btnBallDom.onclick = () => {
+                var a = 9.8;
+                var v = 0;
+                var interval = 100;
+
+                var intervaler = setInterval(() => {
+                    var bodyHeight = 400;
+                    var ballStyle = window.getComputedStyle(ballDom, null);
+                    var posY = parseFloat(ballStyle.top) || 0.0;
+                    var ballHeight = parseFloat(ballStyle.height) || 0.0;
+
+                    posY = posY + v;
+                    if (posY + ballHeight >= bodyHeight) {
+                        posY = bodyHeight - ballHeight;
+                        if (Math.abs(v) <= 1) {
+                            clearInterval(intervaler);
+                        } else {
+                            v = -(v*0.8);
+                        }
+                    }
+                    ballDom.style.top = posY + 'px';
+                    v += a * interval / 1000.0;
+                }, 50);
+            };
+        }
+    </script>
+</head>
+<body>
+    <div id="box"></div>
+    <button id="btn">box</button>
+    <div id="ball"></div>
+    <button id="btn-ball">ball</button>
+</body>
+</html>

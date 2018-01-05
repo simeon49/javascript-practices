@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>练习</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+	<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+<div id="pending" class="tack-list">
+	<h3>待处理</h3>
+</div>
+<div id="inProgress" class="tack-list">
+	<h3>进行中</h3>
+</div>
+<div id="completed" class="tack-list">
+	<h3>已完成</h3>
+</div>
+<div class="tack-list">
+	<h3>添加项目</h3>
+	<form id="todo-form">
+		<input type="text" id="title" placeholder="标题" class="addTitle">
+		<textarea type="text" id="content" placeholder="内容" class="addDescriptions"></textarea>
+		<input type="text" id="datepicker" placeholder="截止日期(月/日/年)" class="addDate">
+		<input type="button" class="btn btn-primary" value="添加项目" id="addItem">
+	</form>
+	<input type="button" class="btn btn-primary" value="清空全部项目" id="">
+	<div id="delete-div" class="hidden">拖到这里删除</div>
+</div>
+</body>
+<script src="app.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var todolist = new MyTodoList();
+		todolist.generateElement({
+			"id":"123",
+			"code":"2",
+			"title":"标题",
+			"date":"06/09/2015",
+			"description":"项目的描述",
+
+		});
+	});
+</script>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>事件广播</title>
+</head>
+
+<body>
+    <div id="target">广播后变红</div>
+    <button onclick="dispatch()">广播</button>
+</body>
+<script>
+    window.onload = function () {
+        var target = document.getElementById('target');
+
+        target.addEventListener('myEvent', function (e) {
+            e.target.style.color = 'red';
+        });
+
+        function dispatch() {
+            var target = document.getElementById('target');
+            var event = new Event('myEvent');
+            target.dispatchEvent(event);
+        }
+
+        window.dispatch = dispatch;
+    }
+</script>
+
+</html>

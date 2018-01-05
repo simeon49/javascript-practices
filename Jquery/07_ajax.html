@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>AJAX</title>
+	<meta charset="utf-8">
+</head>
+<body>
+<h1>AJAX 是与服务器交换数据的艺术，它在不重载全部页面的情况下，实现了对部分网页的更新。</h1>
+<div>
+	<div id="data"></div>
+	<button id="btn1">加载数据 load()</button>
+	<button id="btn2">get() 方法</button>
+	<button id="btn3">post() 方法</button>
+</div>
+</body>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.8.0.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#btn1").click(function(){
+			$("#data").load("06_遍历.html", function(response_txt,status_txt,xhr){
+				if (status_txt == "success") {
+					alert("加载成功!");
+				} else {
+					alert("Error: "+xhr.status+": "+xhr.statusText);
+				}
+			});
+		});
+
+		$("#btn2").click(function(){
+			$.get("07_ajax.asp",function(data, status){
+				alert("Data: " + data + "\nStatus: " + status);
+			});
+		});
+
+		$("#btn3").click(function(){
+			$.post("07_ajax.asp", 
+			{
+				name:"Tom",
+				age:"12"
+			},
+			function(){
+				alert("Data: " + data + "\nStatus: " + status);
+			});
+		});
+	});
+</script>
+</html>

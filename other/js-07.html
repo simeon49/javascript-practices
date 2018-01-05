@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>js-07</title>
+    <script type="text/javascript">
+        window.onkeydown = (event) => {
+
+            if (event.ctrlKey) {
+                console.log(`          ctrl`);
+            }
+            if (event.shiftKey) {
+                console.log(`          shift`);
+            }
+            console.log(`          ${event.keyCode}`);
+
+            var code = String.fromCharCode(event.keyCode);
+            var str = event.ctrlKey? 'Ctrl+' : '';
+            str += event.shiftKey? 'Shift+' : '';
+            str += code;
+            console.log(`'${str}' down`);
+        }
+
+        // window.onkeyup = (event) => {
+        //     console.log(`'${String.fromCharCode(event.keyCode)}' up`);
+        // }
+
+        // window.onkeypress = (event) => {
+        //     if (event.ctrlKey) {
+        //         console.log(`'ctrl' press`);
+        //     } else if (event.shiftKey) {
+        //         console.log(`'shift' press`);
+        //     } else {
+        //         console.log(`'${String.fromCharCode(event.keyCode)}' press`);
+        //     }
+        // }
+    </script>
+</head>
+<body>
+</body>
+</html>

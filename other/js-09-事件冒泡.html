@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>js-09</title>
+    <style type="text/css">
+        #div-1 {
+            width: 500px;
+            height: 500px;
+            background: #f00;
+            position: relative;
+            opacity: 0.8;
+        }
+
+        #div-2 {
+            width: 350px;
+            height: 350px;
+            background: #0f0;
+            margin: 75px 75px;
+            position: absolute;
+            opacity: 0.8;
+        }
+
+        #div-3 {
+            width: 200px;
+            height: 200px;
+            background: #00f;
+            margin: 75px 75px;
+            position: absolute;
+            opacity: 0.8;
+        }
+    </style>
+<script type="text/javascript">
+    window.onload = () => {
+        var div1Dom = document.getElementById('div-1');
+        var div2Dom = document.getElementById('div-2');
+        var div3Dom = document.getElementById('div-3');
+        var link1Dom = document.getElementById('link-1');
+        var link2Dom = document.getElementById('link-2');
+
+        div1Dom.onclick = (event) => {
+            console.log('div-1');
+        }
+        div2Dom.onclick = (event) => {
+            event.stopPropagation();    // 阻止事件流
+            console.log('div-2');
+        }
+        div3Dom.onclick = (event) => {
+            console.log('div-3');
+        }
+
+        link1Dom.onclick = (event) => {
+            console.log('禁止跳转');
+            event.preventDefault();     // 禁止浏览器默认动作
+        }
+        link2Dom.onclick = (event) => {
+            console.log('禁止跳转');
+        }
+    }
+</script>
+</head>
+<body>
+    <div id="div-1">
+        <div id="div-2">
+            <div id="div-3"></div>
+        </div>
+    </div>
+
+    <!-- 禁止浏览器默认动作 -->
+    <a href="http://www.baidu.com" id="link-1">Go to Baidu</a>
+    <!-- or -->
+    <a href="javascript:void(0);" id="link-2">Go to Baidu</a>
+</body>
+</html>

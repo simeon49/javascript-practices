@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>event</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        #test {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            background: #345;
+        }
+    </style>
+    <script type="text/javascript">
+        window.onload = () => {
+            var divDom = document.getElementById('test');
+            divDom.onclick = () => {
+                console.log('ok');
+            };
+            divDom.ondblclick = () => {
+                alert('ok ok');
+            }
+        };
+    </script>
+</head>
+<body>
+    <div id="test" onmousemove="hi()"></div>
+</body>
+    <script type="text/javascript">
+        function hi() {
+            alert('hi');
+        }
+    </script>
+</html>

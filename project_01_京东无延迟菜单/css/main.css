@@ -1,0 +1,76 @@
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,legend,button
+form,fieldset,input,textarea,p,blockquote,th,td {   
+　padding: 0;   
+　margin: 0;   
+}
+
+
+.none {
+  display: none !important;
+}
+
+.cate {
+  position: relative;
+  display: inline-block;
+}
+/* 主菜单 */
+.cate_menu {
+  margin: 0;
+  background-color: #6e6568;
+  width: 190px;
+  padding: 16px 0;
+}
+.cate_menu-item {
+  height: 28px;
+  line-height: 28px;
+  color: #ffffff;
+  padding-left: 12px;
+  list-style: none;
+  cursor: pointer;
+}
+.cate_menu-item.active {
+  background-color: #999395;
+}
+.cate_menu-item span {
+  font-size: 14px;
+}
+.cate_menu-item span:hover {
+  color: #ff0000;
+}
+/* 弹出栏 */
+.cate_pop {
+  position: absolute;
+  top: 0;
+  left: 190px;
+  width: 600px;
+  color: #f7f7f7;
+  box-shadow: 2px 0 5px rgba(0,0,0,.3);
+  box-sizing: border-box;
+}
+.cate_pop a {
+  font-size: 12px;
+  color: #666666;
+  text-decoration: none;
+}
+.cate_pop dl {
+  overflow: hidden;
+  position: relative;
+  padding-left: 80px;
+}
+.cate_pop dt {
+  position: absolute;
+  /* top: 0; */
+  left: 0;
+  width: 70px;
+  line-height: 26px;
+  text-align: right;
+}
+.cate_pop dd {
+
+}
+.cate_pop dd a {
+  display: inline-block;
+  border-left: 1px solid #e0e0e0;
+  padding: 0 10px;
+  margin: 4px 0;
+}

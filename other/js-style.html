@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>style</title>
+    <style type="text/css">
+        #box {
+            background: blue;
+        }
+    </style>
+    <script type="text/javascript">
+        window.onload = () => {
+            var boxDom = document.getElementById('box');
+            document.getElementById('btn').onclick = () => {
+                // 元素.style.ccs样式只能是行内样式
+                var w = boxDom.style.width;
+                var h = boxDom.style.height;
+                var b = boxDom.style.background;
+                alert(`行内样式: w:${w} h:${h} b:${b}`);
+
+                // 使用 getComputedStyle 获取元素的最终样式
+                // document.defaultView.getComputedStyle
+                var b = window.getComputedStyle(boxDom, null).background;
+                // var b = document.defaultView.getComputedStyle(boxDom, null).background;
+                alert(`最终样式: w:${w} h:${h} b:${b}`);
+
+                boxDom.style.width = parseInt(boxDom.style.width) + 10 + 'px';
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="box" style="width: 300px;height: 200px;"></div>
+    <button id="btn">Show</button>
+</body>
+</html>

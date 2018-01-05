@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>焦点图轮播</title>
+	<meta charset="utf-8">
+	<!-- <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"> -->
+	<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+	<!-- <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script> -->
+	<script src="app.js"></script>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<div id="slider-box"> 
+		<a href="#" target="_blank"><img src="images/1.jpg" title="图片1"/></a>
+		<a href="#" target="_blank"><img src="images/2.jpg" title="图片2"/></a>
+		<a href="#" target="_blank"><img src="images/3.jpg" title="图片3"/></a>
+		<a href="#" target="_blank"><img src="images/4.jpg" title="图片4"/></a>
+		<a href="#" target="_blank"><img src="images/5.jpg" title="图片5"/></a>
+	</div>
+	<div id="bg" class="black"></div>
+</body>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var slider_box = new SliderBox({
+			"box_id": "slider-box",		// 焦点图轮播 id
+			"width": "347px",
+			"height": "220px",
+		});
+
+		$("#bg").remove();
+	});
+</script>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <title>手势事件</title>
+
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+  <style type="text/css">
+    .header {
+      width: 100%;
+      height: 30px;
+      border: 2px solid black;
+      margin-bottom: 10px;
+    }
+
+    .box {
+      border: 2px solid black;
+      margin: 10px;
+    }
+    .box-0 {
+    }
+    .box-1 {
+      width: 200px;
+      height: 100px;
+      background-color: red;
+    }
+    .box-2 {
+      width: 200px;
+      height: 100px;
+      background-color: greenyellow;
+    }
+    .box-3 {
+      width: 200px;
+      height: 100px;
+      background-color:blanchedalmond;
+    }
+
+    .footer {
+      width: 100%;
+      height: 30px;
+      margin-top: 10px;
+      border: 2px solid black;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="header">Head</header>
+
+  <div class="box-0">
+    <div class="box box-1">BOX - 1</div>
+    <div class="box box-2">BOX - 2 </div>
+    <div class="box box-3">BOX - 3 </div>
+  </div>
+  
+  <footer class="footer">footer</footer>
+
+  <script>
+    let timer = null;
+    let $topTip = null;
+    function topTip(msg) {
+      if (!timer) {
+        $topTip = $('<div>');
+        $topTip.css({ 'position': 'fixed', 'top': 0, 'font-size': '14px', 'color': 'white', 'background-color': 'black' });
+        $topTip.text(msg);
+        $('body').append($topTip);
+      } else {
+        clearTimeout(timer);
+        $topTip.text(msg);
+      }
+      timer = setTimeout(function () {
+        $topTip.remove(); 
+        timer = null;
+      }, 5000);
+    }
+
+    $(document).ready(function() {
+      const $box = $('.box');
+
+      // 当手指放在屏幕上触发
+      $box.on('touchstart', function(e) {
+        const $box = $(this);
+        topTip('touchstart:');
+        e.preventDefault();
+        e.stopPropagation();
+      });
+
+      // 当手指在屏幕上滑动时，连续地触发
+      $box.on('touchmove', function (e) {
+        const $box = $(this);
+        topTip('touchmove:');
+        let msg = '';
+        for (let i = 0; i < e.touches.length; i ++) {
+          const touch = e.touches[i];
+          msg += `[手指-${i}] client:(${touch.clientX}, ${touch.clientY}), page:(${touch.pageX}, ${touch.pageY}), screen:(${touch.screenX}, ${touch.screenY})\n`;
+        }
+        topTip(msg);
+        e.preventDefault();
+        e.stopPropagation();
+      });
+
+      // touchend
+      $box.on('touchend', function (e) {
+        const $box = $(this);
+        topTip('touchend:');
+        e.preventDefault();
+        e.stopPropagation();
+      });
+
+      // 当一个手指已经按在屏幕上，而另一个手指又触摸在屏幕时触发
+      $box.on('gesturestart', function (e) {
+        const $box = $(this);
+        topTip('gesturestart:');
+        e.preventDefault();
+        e.stopPropagation();
+      });
+
+      // 当触摸屏幕的任何一个手指的位置发生变化时触发
+      $box.on('gesturechange', function (e) {
+        const $box = $(this);
+        topTip('gesturechange:');
+        e.preventDefault();
+        e.stopPropagation();
+      });
+
+      // 当任何一个手指从屏幕上面移开时触发
+      $box.on('gestureend', function (e) {
+        const $box = $(this);
+        topTip('gestureend:');
+        e.preventDefault();
+        e.stopPropagation();
+      });
+    });
+  </script>
+</body>
+
+</html>

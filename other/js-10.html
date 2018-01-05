@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>js-10</title>
+    <style type="text/css">
+        #timer {
+            width: 400px;
+            height: 40px;
+            background: #000;
+            color: #fff;
+            font-size: 32px;
+            line-height: 40px;
+            text-align: center;
+        }
+    </style>
+    <script type="text/javascript">
+        window.onload = () => {
+            var timerDom = document.getElementById('timer');
+            var dayDom = timerDom.querySelector('.day');
+            var hourDom = timerDom.querySelector('.hour');
+            var minuteDom = timerDom.querySelector('.minute');
+            var secondDom = timerDom.querySelector('.second');
+
+            // 2017-04-03 17:50:00
+            var targetDate = new Date(2017, 3, 3, 17, 50, 00);
+
+            var intervaler = setInterval(() => {
+                var curDate = new Date();
+                var diff = (targetDate - curDate) / 1000;   // (ms)
+
+                secondDom.textContent = parseInt(diff % 60);
+                diff = diff / 60;
+                minuteDom.textContent = parseInt(diff % 60);
+                diff = diff / 60;
+                hourDom.textContent = parseInt(diff % 24);
+                diff = diff / 24
+                dayDom.textContent = parseInt(diff);
+
+            }, 1000);
+        }
+    </script>
+</head>
+<body>
+    <div id="timer">
+        <span class="day"></span>天 <span class="hour"></span>:<span class="minute"></span>:<span class="second"></span>
+    </div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>js-03</title>
+    <style type="text/css">
+        #test {
+            color: blue;
+        }
+
+        #test span:nth-of-type(1) {
+            color: green;
+        }
+
+        .beautiful {
+            font-size: 20px;
+        }
+    </style>
+    <script type="text/javascript">
+        window.onload = () => {
+            var divDom = document.getElementById('test');
+            var spanDom = divDom.querySelector('.beautiful');
+
+            spanDom.style.background = '#777';
+
+            var cloneSpanDom = spanDom.cloneNode(true);
+            divDom.append(cloneSpanDom);
+        }
+    </script>
+</head>
+<body>
+    <div id="test">
+        <span class="beautiful">Test</span>
+    </div>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>js-08</title>
+    <style type="text/css">
+        #keybox {
+            width: 800px;
+            height: 120px;
+            background: blue;
+            opacity: 0.8;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        #keybox .key {
+            width: 100px;
+            height: 100px;
+            font-size: 80px;
+            line-height: 100px;
+            border: 1px solid #777;
+            position: absolute;
+            transform: rotate(0deg);
+            text-align: center;
+            font-weight: 700;
+            top: 0;
+            left: 350px;
+        }
+    </style>
+
+    <script type="text/javascript">
+        window.onload = () => {
+            var keyBoxDom = document.getElementById('keybox');
+
+            makeKeys(150, 1000);
+
+            /**
+             * 生成keys
+             * @param  {Number} speed    (ps/s)
+             * @param  {Number} interval (ms)
+             */
+            function makeKeys (speed, interval) {
+                var keys = [];
+                var timeInterval = 50;     // (ms)
+                speed = speed * timeInterval / 1000.0;
+
+                var intervaler = setInterval(() => {
+                    // 生成随机Dom
+                    var divDom = document.createElement('div');
+                    divDom.setAttribute('class', 'key');
+                    divDom.style.transform = `rotate(${Math.random()*60 - 30}deg)`;
+                    divDom.textContent = String.fromCharCode(
+                        Math.floor(Math.random() * 27 + 65));
+                    keyBoxDom.appendChild(divDom);
+
+                    var divIntervaler = setInterval(() => {
+                        var posH = divDom.offsetTop;
+                        var height = 100;
+
+                        if (posH + height >= 500) {
+                            keyBoxDom.removeChild(divDom);
+                            clearInterval(divIntervaler);
+                        } else {
+                            divDom.style.top = posH + speed + 'px';
+                        }
+
+                    }, timeInterval)
+                }, interval);
+            }
+
+            window.onkeydown = (event) => {
+
+                if (event.keyCode >= 65 && event.keyCode <= 65 + 25) {
+                    var divDoms = keyBoxDom.querySelectorAll('.key');
+                    var code = String.fromCharCode(event.keyCode);
+
+                    for (let divDom of divDoms) {
+                        if (divDom.textContent === code) {
+                            console.log('good');
+                            keyBoxDom.removeChild(divDom);
+                            break;
+                        }
+                    }
+                }
+
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="keybox"></div>
+</body>
+</html>

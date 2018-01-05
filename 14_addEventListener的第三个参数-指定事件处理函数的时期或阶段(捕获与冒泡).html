@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>addEventListener的第三个参数-指定事件处理函数的时期或阶段(捕获与冒泡)</title>
+    <style>
+        #div-1 {
+            width: 300px;
+            height: 300px;
+            background-color: blue;
+            padding: 50px;
+            box-sizing: border-box;
+        }
+
+        #div-2 {
+            width: 200px;
+            height: 200px;
+            background-color: red;
+            padding: 50px;
+            box-sizing: border-box;
+        }
+
+        #div-3 {
+            width: 100px;
+            height: 100px;
+            background-color: yellow;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="div-1">
+        <div id="div-2">
+            <div id="div-3"></div>
+        </div>
+    </div>
+    <div>
+        <a href="http://blog.csdn.net/jasonzhoujc/article/details/6107961">参考</a>
+    </div>
+</body>
+<script>
+    window.onload = function () {
+        var box1 = document.getElementById('div-1');
+        var box2 = document.getElementById('div-2');
+        var box3 = document.getElementById('div-3');
+
+        box1.addEventListener('click', function (e) {
+            console.log('box1');
+        }, true);
+
+        box2.addEventListener('click', function (e) {
+            console.log('box2');
+            e.stopPropagation();
+        }, false);
+
+        box3.addEventListener('click', function (e) {
+            console.log('box3');
+        }, true);
+    }
+</script>
+
+</html>

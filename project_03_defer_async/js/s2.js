@@ -1,0 +1,1 @@
+console.log(performance.now(), 'S2 完成')

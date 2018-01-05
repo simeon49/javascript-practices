@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Generator && Async</title>
+	<meta charset="utf-8">
+</head>
+<body>
+    <h1>实现异步操作的顺序执行</h1>
+</body>
+	<script type="text/javascript">
+	var print = console.log.bind(console);
+    function mission(n) {
+        return new Promise((resolve, reject) => {
+            if (n > 0) {
+                setTimeout(() => {
+                    print(`[${n}]: ok`);
+                    resolve(n);
+                }, 3000);
+            } else {
+                print(`[${n}]: fail`);
+                reject('n < 0');
+            }
+        })
+    }
+
+    // -------------------------------- 方法一: generator --------------------------------
+    function run(fn) {
+        let gen = fn();
+
+        function next(data) {
+            var result = gen.next(data);
+            if (result.done) return;
+            result.value.then(res => next(res)).catch(err => { throw err; });
+        }
+        next();
+    }
+
+    function* missions() {
+        try {
+            let m1 = yield mission(1);
+            print('> m1:', m1);
+            let m2 = yield mission(m1 + 1);
+            print('> m2:', m2);
+            let m3 = yield mission(m2 + 2);
+            print('> m3:', m3);
+        } catch (err) {
+            console.error('[Error]:', JSON.stringify(err));
+            return null;
+        }
+    }
+
+    run(missions);
+
+
+    // -------------------------------- 方法二: async --------------------------------
+    async function doMissions() {
+        try {
+            let m1 = await mission(1);
+            print('> m1:', m1);
+            let m2 = await mission(m1 + 1);
+            print('> m2:', m2);
+            let m3 = await mission(3);
+            print('> m3:', m2 + 1);
+        } catch (err) {
+            console.error('[Error]:', JSON.stringify(err));
+            return null;
+        }
+    }
+    doMissions();
+	</script>
+</html>

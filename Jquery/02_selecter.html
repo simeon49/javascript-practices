@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Selecter 选择器</title>
+	<meta charset="utf-8">
+
+</head>
+<body>
+	<h1>测试 tag</h1>
+	<div class="css_box">测试 css</div>
+	<div id="id_box">测试 id</div>
+	<div>
+		<button id="button_1">改变上面元素的颜色为蓝色</button>
+		<button id="button_2">改变所有元素的颜色为黄色</button>
+	</div>
+	<div>
+		<li>here</li>
+		<ul>
+			<li>1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+			<li>5</li>
+			<li>6</li>
+			<li>7</li>
+		</ul>
+	</div>
+</body>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs
+/jquery/1.4.0/jquery.min.js"></script>
+<script type="text/javascript">
+	/////////
+	// 选择器 //
+	// 	$('tag'):  $('div')
+	// 	$('.css'): 选择CSS样式
+	// 	$('#id'): 选择ID 
+	// 	$('*'): 选择所有元素
+	// 	元素选择器
+	// 	$("p") 选取 <p> 元素。
+	//  $("p.intro") 选取所有 class="intro" 的 <p> 元素。
+	//	$("p#demo") 选取所有 id="demo" 的 <p> 元素。
+	//	
+	//	
+	//	参考: http://www.w3school.com.cn/jquery/jquery_ref_selectors.asp
+	/////////
+	$(document).ready(function(){
+		$('div #button_1').click(function(){
+			$('h1, .css_box, #id_box').css('backgroundColor', 'blue');
+		});
+		$('div #button_2').click(function(){
+			$('*').css('backgroundColor', 'yellow');
+		});
+		// $('h1').css('backgroundColor', '#f5f5f5');
+		// $('.css_box').css('backgroundColor', '#e5e5e5');
+		// $('#id_box').css('backgroundColor', '#c5c5c5');
+		// $('div:contains(id)').css('backgroundColor', '#b5b5b5'); // 包含指定字符串的所有元素
+		// $('div:has(#button_1)').css('backgroundColor', '#a5a5a5'); // 包含button_1的div
+		// $('div[class=css_box]').css('backgroundColor', '#959595'); //选择div(有class属性 并且属性值为css_box)
+		// $('div[class$=box]').css('backgroundColor', '#858585'); //选择div(有class属性 并且属性值以box结尾)
+
+		// $('li:first').css('backgroundColor', '#757575'); // 在所有li元素中选取第一个元素
+		// $('li:first-child').css('backgroundColor', '#757575');  // 选择所有li元素中的第一个子元素
+		// $('li:nth-child(3)').css('backgroundColor', '#757575');	//选择所有li元素中的第n个子元素
+		// $('li:nth-child(odd)').css('backgroundColor', '#757575');	//选择所有li元素中的奇数子元素
+		// $('li:nth-child(even)').css('backgroundColor', '#757575');	//选择所有li元素中的偶数子元素
+		// $('li:nth-child(4n+1)').css('backgroundColor', '#757575');	//选择所有li元素中的(4N+1)子元素
+		// $('li:only-child').css('backgroundColor', '#757575');	//只有一个子元素的li
+
+		
+	});
+</script>
+</html>

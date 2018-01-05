@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>js-11</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #box {
+            width: 100px;
+            height: 100px;
+            border: 1px solid #777;
+            transition: all 1.5s;
+        }
+
+        img {
+            width: 100px;
+            height: 100px;
+            border: 1px solid #777;
+        }
+    </style>
+    <script type="text/javascript">
+        window.addEventListener('load', () => {
+            var boxDom = document.getElementById('box');
+            var imgDoms = document.getElementsByTagName('img');
+
+            boxDom.onclick = function (event) {
+                this.style.width = '300px';
+                this.style.height = '300px';
+            }
+
+            for (let i = 0; i < imgDoms.length; i ++) {
+                imgDoms[i].onclick = function(event) {
+                    var index = i;
+                    console.log(`${index}`);
+                    this.style.visibility = 'hidden';
+                }
+            }
+
+        });
+    </script>
+</head>
+<body>
+    <div id="box"></div>
+    <!-- img[src=images/$$.jpg]*30 -->
+    <img src="images/01.jpg" alt="01">
+    <img src="images/02.jpg" alt="02">
+    <img src="images/03.jpg" alt="03">
+    <img src="images/04.jpg" alt="04">
+    <img src="images/05.jpg" alt="05">
+    <img src="images/06.jpg" alt="06">
+    <img src="images/07.jpg" alt="07">
+    <img src="images/08.jpg" alt="08">
+    <img src="images/09.jpg" alt="09">
+    <img src="images/10.jpg" alt="10">
+    <img src="images/11.jpg" alt="11">
+    <img src="images/12.jpg" alt="12">
+    <img src="images/13.jpg" alt="13">
+    <img src="images/14.jpg" alt="14">
+    <img src="images/15.jpg" alt="15">
+    <img src="images/16.jpg" alt="16">
+    <img src="images/17.jpg" alt="17">
+    <img src="images/18.jpg" alt="18">
+    <img src="images/19.jpg" alt="19">
+    <img src="images/20.jpg" alt="20">
+    <img src="images/21.jpg" alt="21">
+    <img src="images/22.jpg" alt="22">
+    <img src="images/23.jpg" alt="23">
+    <img src="images/24.jpg" alt="24">
+    <img src="images/25.jpg" alt="25">
+    <img src="images/26.jpg" alt="26">
+    <img src="images/27.jpg" alt="27">
+    <img src="images/28.jpg" alt="28">
+    <img src="images/29.jpg" alt="29">
+    <img src="images/30.jpg" alt="30">
+</body>
+</html>

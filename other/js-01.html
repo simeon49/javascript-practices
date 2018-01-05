@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>js-01</title>
+    <script>
+        // var a = prompt('number:a');
+        // var opt = prompt('opt', '*');
+        // var b = prompt('number:a');
+
+        // a = parseFloat(a);
+        // b = parseFloat(b);
+        // var ret;
+        // switch (opt) {
+        //     case '+': ret = a + b;break;
+        //     case '-': ret = a - b;break;
+        //     case '*': ret = a * b;break;
+        //     case '/': ret = a / b;break;
+        //     case '%': ret = a % b;break;
+        //     default: ret = a + b;
+        // }
+        // document.write(`${a} ${opt} ${b}=${ret}`);
+
+        window.onload = () => {
+            // var imgDom = document.getElementById('pro-01');
+            // var imgDom = document.getElementsByClassName('image')[0];
+            // var imgDom = document.getElementsByTagName('img')[0];
+            var imgDom = document.getElementsByName('my-img')[0];
+            var btnDom = document.getElementById('btn');
+
+            imgDom.src = 'jd/01-big.jpg';
+            imgDom.setAttribute('src', 'jd/01-small.jpg');
+
+            btnDom.onclick = () => {
+                var isShow = window.getComputedStyle(imgDom, null).display==='none'?false:true;
+                imgDom.style.display = isShow?'none':'inline';
+            }
+
+            document.title = btnDom.textContent;
+        }
+    </script>
+</head>
+<body>
+    <img src="" id="pro-01" class="image" name="my-img">
+    <button id="btn">here</button>
+</body>
+</html>

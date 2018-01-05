@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>时钟</title>
+	<meta charset="utf-8">
+</head>
+<body>
+	<div id="cur_time"></div>
+</body>
+<script type="text/javascript">
+	/*
+		Date 对象
+		http://www.w3school.com.cn/jsref/jsref_obj_date.asp
+	 */
+	function showDate(date) {
+		var yy = date.getFullYear();
+		var MM = date.getMonth();
+		if (MM < 10) {MM = '0' + MM;}
+		var dd = date.getDate();
+		if (dd < 10) {dd = '0' + dd;}
+		var hh = date.getHours();
+		if (hh < 10) {hh = '0' + hh;}
+		var mm = date.getMinutes();
+		if (mm < 10) {mm = '0' + mm;}
+		var ss = date.getSeconds();
+		if (ss < 10) {ss = '0' + ss;}
+		var week = new Array(7);
+		week[0] = "日";
+		week[1] = "一";
+		week[2] = "二";
+		week[3] = "三";
+		week[4] = "四";
+		week[5] = "五";
+		week[6] = "六";
+		var day = date.getDay();
+		return yy+'-'+MM+'-'+dd+' '+hh+':'+mm+':'+ss+" 星期"+week[day];
+	}
+	function tick() {
+		var date = new Date();
+		document.getElementById("cur_time").innerHTML = showDate(date);
+		window.setTimeout("tick()", 1000);
+	}
+	tick();
+	</script>
+</html>

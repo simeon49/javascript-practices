@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Window对象</title>
+	<meta charset="utf-8">
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+	/*
+		window 对象
+		表示浏览器中打开的窗口
+		所有全局变量,函数,对象均自动成为window成员(属性,方法)
+	 */
+	///////////
+	// 获取属性 //
+	///////////
+	// window.document.getElementById('id');
+
+	///////////
+	// 常用方法 //
+	///////////
+	var my_window = window.open('', 'myWindow', 'top=0, left=0');
+	my_window.document.write("Hi window.<br>");
+	// my_window.focus();
+	
+	// 获取浏览器宽度
+	var width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth; // 3个方法保证兼容
+	document.write(width);
+	
+
+	/////////////////////////////////////////////////////////////
+	// 子对象
+	// document, frames, history, location, navigator, screen //
+	/////////////////////////////////////////////////////////////
+</script>
+</html>

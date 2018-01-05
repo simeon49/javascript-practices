@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>js-05</title>
+    <style type="text/css">
+        #text {
+            width: 500px;
+            height: 300px;
+            border: 1px solid black;
+            padding: 8px;
+            font-size: 1.5em;
+            overflow: auto;
+            margin: 0 auto;
+        }
+    </style>
+    <script type="text/javascript">
+        window.onload = () => {
+            var textDom = document.getElementById('text');
+            var starBtnDom = document.getElementById('start');
+            var stopBtnDom = document.getElementById('stop');
+
+            var intervaler = null;
+            var speed = 100;        // (px/s)
+            var timeInterval = 100; // (ms)
+
+            starBtnDom.onclick = () => {
+                if (intervaler) {
+                    return;
+                }
+                intervaler = setInterval(() => {
+                    textDom.scrollTop += speed * timeInterval / 1000.0;
+                }, timeInterval);
+            }
+
+            stopBtnDom.onclick = () => {
+                if (!intervaler) {
+                    return ;
+                }
+                clearInterval(intervaler);
+                intervaler = null;
+            }
+
+            textDom.onscroll = () => {
+                console.log(textDom.scrollTop);
+                document.title = textDom.scrollTop;
+            }
+        }
+    </script>
+</head>
+<body>
+    <button id="start">Start</button>
+    <button id="stop">Stop</button>
+    <div id="text">
+        <span>
+            Cherry blossoms are seen with sunset in background near the Tidal Basin in Washington D.C., capital of the United States, March 23, 2017. The cherry blossoms in the U.S. capital are in bloom, though last week's snow, ice and frigid weather destroyed roughly half of the buds. (Xinhua/Yin Bogu)
+            <br>
+            Cherry blossoms are seen with sunset in background near the Tidal Basin in Washington D.C., capital of the United States, March 23, 2017. The cherry blossoms in the U.S. capital are in bloom, though last week's snow, ice and frigid weather destroyed roughly half of the buds. (Xinhua/Yin Bogu)
+            <br>
+            Cherry blossoms are seen with sunset in background near the Tidal Basin in Washington D.C., capital of the United States, March 23, 2017. The cherry blossoms in the U.S. capital are in bloom, though last week's snow, ice and frigid weather destroyed roughly half of the buds. (Xinhua/Yin Bogu)
+            <br>
+            Cherry blossoms are seen with sunset in background near the Tidal Basin in Washington D.C., capital of the United States, March 23, 2017. The cherry blossoms in the U.S. capital are in bloom, though last week's snow, ice and frigid weather destroyed roughly half of the buds. (Xinhua/Yin Bogu)
+            <br>
+            Cherry blossoms are seen with sunset in background near the Tidal Basin in Washington D.C., capital of the United States, March 23, 2017. The cherry blossoms in the U.S. capital are in bloom, though last week's snow, ice and frigid weather destroyed roughly half of the buds. (Xinhua/Yin Bogu)
+            <br>
+            Cherry blossoms are seen with sunset in background near the Tidal Basin in Washington D.C., capital of the United States, March 23, 2017. The cherry blossoms in the U.S. capital are in bloom, though last week's snow, ice and frigid weather destroyed roughly half of the buds. (Xinhua/Yin Bogu)
+            <br>
+            Cherry blossoms are seen with sunset in background near the Tidal Basin in Washington D.C., capital of the United States, March 23, 2017. The cherry blossoms in the U.S. capital are in bloom, though last week's snow, ice and frigid weather destroyed roughly half of the buds. (Xinhua/Yin Bogu)
+            <br>
+            Cherry blossoms are seen with sunset in background near the Tidal Basin in Washington D.C., capital of the United States, March 23, 2017. The cherry blossoms in the U.S. capital are in bloom, though last week's snow, ice and frigid weather destroyed roughly half of the buds. (Xinhua/Yin Bogu)
+            <br>
+            Cherry blossoms are seen with sunset in background near the Tidal Basin in Washington D.C., capital of the United States, March 23, 2017. The cherry blossoms in the U.S. capital are in bloom, though last week's snow, ice and frigid weather destroyed roughly half of the buds. (Xinhua/Yin Bogu)
+            <br>
+            Cherry blossoms are seen with sunset in background near the Tidal Basin in Washington D.C., capital of the United States, March 23, 2017. The cherry blossoms in the U.S. capital are in bloom, though last week's snow, ice and frigid weather destroyed roughly half of the buds. (Xinhua/Yin Bogu)
+            <br>
+            Cherry blossoms are seen with sunset in background near the Tidal Basin in Washington D.C., capital of the United States, March 23, 2017. The cherry blossoms in the U.S. capital are in bloom, though last week's snow, ice and frigid weather destroyed roughly half of the buds. (Xinhua/Yin Bogu)
+            <br>
+            Cherry blossoms are seen with sunset in background near the Tidal Basin in Washington D.C., capital of the United States, March 23, 2017. The cherry blossoms in the U.S. capital are in bloom, though last week's snow, ice and frigid weather destroyed roughly half of the buds. (Xinhua/Yin Bogu)
+            <br>
+            Cherry blossoms are seen with sunset in background near the Tidal Basin in Washington D.C., capital of the United States, March 23, 2017. The cherry blossoms in the U.S. capital are in bloom, though last week's snow, ice and frigid weather destroyed roughly half of the buds. (Xinhua/Yin Bogu)
+        </span>
+    </div>
+</body>
+</html>

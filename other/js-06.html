@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>js-06</title>
+    <style type="text/css">
+        #ball {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 2px solid #777;
+            position: absolute;
+            /*transition: all 100ms;*/
+        }
+    </style>
+    <script type="text/javascript">
+        window.onload = function() {
+            var speedX = 210;     // (px/s)
+            var speedY = 100;     // (px/s)
+            var timeInterval = 100; // (ms)
+            var ballDom = document.getElementById('ball');
+            var ballWidth = parseFloat(window.getComputedStyle(ballDom, null).width);
+            var ballHeight = parseFloat(window.getComputedStyle(ballDom, null).height);
+            var intervaler;
+
+            speedX = speedX * timeInterval / 1000.0;
+            speedY = speedY * timeInterval / 1000.0;
+            ballMove();
+
+
+            function ballMove() {
+                intervaler = setInterval(() => {
+                    var curX = ballDom.offsetLeft;
+                    var curY = ballDom.offsetTop;
+                    document.title = `${curX} ${curY}`
+
+                    var posX = curX + speedX;
+                    var posY = curY + speedY;
+
+                    if (speedX > 0 && (posX + ballWidth) >= window.innerWidth) {
+                        posX = window.innerWidth - ballWidth - 3;
+                        speedX = -speedX;
+                    } else if (speedX < 0 && posX <= 0) {
+                        posX = 0;
+                        speedX = -speedX;
+                    }
+
+                    if (speedY > 0 && (posY + ballHeight) >= window.innerHeight) {
+                        posY = window.innerHeight - ballHeight - 3;
+                        speedY = -speedY;
+                    } else if (speedY < 0 && posY <= 0) {
+                        posY = 0;
+                        speedY = -speedY;
+                    }
+
+                    ballDom.style.left = posX + 'px';
+                    ballDom.style.top = posY + 'px';
+
+                }, timeInterval);
+            }
+
+            ballDom.onmouseover = () => {
+                clearInterval(intervaler);
+            }
+
+            ballDom.onmouseout = () => {
+                ballMove();
+            }
+
+            ballDom.onclick = (event) => {
+                console.log(`(${event.clientX},${event.clientY})  (${event.layerX}, ${event.layerY})`);
+            }
+
+            window.onresize = () => {
+                console.log('resize');
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="ball"></div>
+</body>
+</html>

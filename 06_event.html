@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Event</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+	h1 {
+		margin: 0;
+		padding: 0;
+		width: 200px;
+		height: 100px;
+		background-color: green;
+		color: white;
+		font-size: 21px;
+		line-height:100px;
+		float: left;
+		text-align: center;
+		margin-left: 50px;
+	}
+	.cl {
+		clear: both;
+	}
+	</style>
+	<script type="text/javascript">
+	//////////
+	// 常用事件 // 
+	// http://www.w3school.com.cn/js/js_htmldom_events.asp
+	// 	onclick:
+	// 	onMouseOver:
+	// 	onLoad: 打开页面/离开页面
+	// 	onUnload:
+	// 	onFous: 
+	// 	onBlwr:
+	// 	onChange:
+	//////////
+
+	var g_txt_list = ["请单击", "再次单击", "再再单击", "好吧"];
+	var g_txt_num = 0;
+	function onClick() {
+		g_txt_num = (g_txt_num + 1) % g_txt_list.length;
+		document.getElementById("onclick_event").innerHTML = g_txt_list[g_txt_num];
+	}
+	function onMouseOver() {
+		document.getElementById("onmouseover_event").innerHTML = "谢谢";
+	}
+	function onMouseOut() {
+		document.getElementById("onmouseover_event").innerHTML = "把鼠标移到上面";
+	}
+	function isEmail(str){
+       var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
+       return reg.test(str);
+	}
+	function onChanged() {
+		var email = document.getElementById("email").value;
+		if (isEmail(email)) {
+			document.getElementById("email").style.color = "#ccc";
+		} else {
+			document.getElementById("email").style.color = "red";
+		}
+	}
+	function onFoucs() {
+		document.getElementById("email").style.fontSize = "32px";
+	}
+ 	</script>
+</head>
+<body>
+	<h1 id="onclick_event" onclick="onClick()">请单击</h1>
+	<h1 id="onmouseover_event" onmouseover="onMouseOver()" onmouseout="onMouseOut()">把鼠标移到上面</h1>
+	<form class="cl" action="" onsubmit="javascript:alert('提交被拒绝'); return false;">
+		Email:<input type="text" id="email" onchange="onChanged()" value="example@server.com" onfocus="onFoucs()"/>
+		<input type="submit" value="提交"/>
+	</form>
+
+</body>
+</html>

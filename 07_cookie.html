@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Cookie</title>
+	<meta charset="utf-8">
+	<script type="text/javascript">
+	/////////////
+	// coockie //
+	//  	存放的数据不能大于4kb 
+	//  	格式: cookiename = cookievalue
+	//  	有效期: 临时的(关闭后删除) 但可以设置
+	//  	typeof(document.cookie) //string
+	//  	清除方式:
+	//  		设为空值
+	/////////////
+
+	// document.cookie = "name=25";
+
+	// var _date = new Date();
+	// _date.setDate(_date.getDate()+30);
+	// var date = _date.toGMTString();
+	// document.cookie = "name=value;expires=" + date;
+
+	function setCookie(c_name, value, expiredays) {
+		var exdate=new Date();
+		exdate.setDate(exdate.getDate()+expiredays);
+		document.cookie = c_name + "=" + escape(value) + ((expiredays==null) ? "" : ";expires="+exdate.toGMTString());
+		document.write("Set: "+ document.cookie + "<br/>");
+	}
+
+	function getCookie(c_name) {
+		document.write("Get: "+ document.cookie + "<br/>");
+		if (document.cookie.length > 0) {
+			c_start = document.cookie.indexOf(c_name+"=");
+			if (c_start != -1) {
+				c_start = c_start + c_name.length + 1;
+				c_end = document.cookie.indexOf(";", c_start);
+				if (c_end == -1) {
+					c_end = document.cookie.length;
+				}
+				return unescape(document.cookie.substring(c_start, c_end));
+			}
+		}
+		return "";
+	}
+	// function addCookie(objName,objValue,objHours){
+	//     var str = objName + "=" + escape(objValue); 
+	//     if(objHours > 0){
+	//         var date = new Date(); 
+	//         var ms = objHours*3600*1000; 
+	//         date.setTime(date.getTime() + ms); 
+	//         str += "; expires=" + date.toGMTString(); 
+	//     } 
+	//     document.cookie = str; 
+	// } 
+
+	// function getCookie(objName){
+	//     var arrStr = document.cookie.split("; "); 
+	//     for(var i = 0;i < arrStr.length;i ++){ 
+	//         var temp = arrStr[i].split("="); 
+	//         if(temp[0] == objName) return unescape(temp[1]); 
+	//     } 
+	// } 
+
+	// function delCookie(name){
+	//     var date = new Date(); 
+	//     date.setTime(date.getTime() - 10000); 
+	//     document.cookie = name + "=a; expires=" + date.toGMTString(); 
+	// } 
+	
+	function checkCookie() {
+		username = getCookie('username');
+		if (username != null && username != "") {
+			alert("Welcome again " + username + "!");
+		} else {
+			while (true) {
+				username = prompt("Please enter your name:", "");
+				document.write("Set: 1 <br/>");
+				if (username != null && username != "") {
+					document.write("Set: 2 <br/>");
+					setCookie("username", username, 7);
+					document.write("Set: 3 <br/>");
+					document.write("Set: "+ document.cookie + "<br/>");
+					document.write("Set: 4 <br/>");
+					break;
+				}
+			}
+		}
+	}
+	</script>
+</head>
+<body onload="javascript:checkCookie()">
+
+</body>
+</html>

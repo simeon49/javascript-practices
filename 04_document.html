@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Document</title>
+	<meta charset="utf-8">
+</head>
+	<script type="text/javascript">
+	///////////////////
+	// document 对象集合 //
+	// 		all[]  所有html元素访问的数组
+	// 		anchors[]  所有anchors引用的数组
+	// 		forms[]  所有表单的数组
+	// 		images[] 所有图像的数组
+	// 		links[] 所有 <a>标签的数组
+	///////////////////
+
+	//////////
+	// 对象属性 //
+	// 		cookie
+	// 		domain 当前域名
+	// 		referrer 得到前一个url地址 没有则为 undefined
+	// 		title 当前文档的标题
+	// 		backgroundColor 获取背景色
+	//////////
+
+	////////////
+	// 常用对象方法 //
+	// 		write()  输出
+	// 		createElement(tag)	
+	// 		getElementById()
+	// 		getElementsByName()
+	////////////
+	
+	function test() {
+		var str = "";
+		str = "domain: " + document.domain + "<br/>";
+		str += "title: " + document.title + "<br/>";
+		var win = window.open("", "", "top=0,letf=0,width=300, height=200");
+		win.document.write(str);
+	}
+	
+	</script>
+<body>
+	<form name="form1"><a href="http://www/baidu.com/xhtml" name="a1">xhtml</a></form>
+	<form name="form2"><a href="http://www/baidu.com/css" name="a2">css</a></form>
+	<form name="form3"><a href="http://www/baidu.com/javascript" name="a3">javascript</a></form>
+
+	<input type="button" value="显示第二个表单的名称" onclick="javascript:alert(document.forms[1].name)" />
+	<input type="button" value="显示第二个表单的第二种方法" onclick="javascript:alert(document.forms['form1'].name)"/>
+	<input type="button" value="显示第一个链接的名称" onclick="javascript:alert(document.links[0].name)"/>
+	<input type="button" value="显示第二个链接的第二种方法" onclick="javascript:alert(document.links['a1'].name)"/>
+	<input type="button" value="显示第三个链接href属性的值" onclick="javascript:alert(document.links[2].href)"/>
+	<br/>
+	<input type="button" value="显示文档的属性" onclick="javascript:test()" />
+</body>
+</html>

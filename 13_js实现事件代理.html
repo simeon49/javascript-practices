@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>js实现事件代理</title>
+    <style>
+        #item-list {
+            list-style: none;
+        }
+        #item-list li {
+            width: 80px;
+            text-align: center;
+            color: #ffffff;
+            line-height: 30px;
+            background-color: #111111;
+            border: 1px solid #ffffff;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <ul id="item-list">
+        <li>A</li>
+        <li>B</li>
+        <li>C</li>
+        <li>D</li>
+        <li>E</li>
+        <li>F</li>
+    </ul>
+</body>
+<script>
+    window.onload = function () {
+            var itemList = document.getElementById('item-list');
+            itemList.addEventListener('click', function (e) {
+                var targetEle = e.target;
+                if (targetEle.nodeName.toLowerCase() === 'li') {
+                    // console.log(e);
+                    alert(targetEle.innerHTML)
+                }
+            });
+        }
+</script>
+</html>

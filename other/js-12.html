@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>js-12</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        #detail .table-main>ul {
+            width: 500px;
+            height: 40px;
+            background: #000;
+        }
+        #detail .table-main>ul>li {
+            display: inline-block;
+            font-size: 18px;
+            line-height: 40px;
+            text-align: center;
+            padding: 0 10px;
+            transition: all 500ms;
+        }
+        #detail .table-main>ul>li:hover {
+            background: #777;
+        }
+        #detail .table-main>ul>li>a {
+            color: #fff;
+            text-decoration: none;
+        }
+        #detail .table-main .current {
+            background: #777;
+        }
+
+        #detail .content {
+            width: 500px;
+            height: 300px;
+
+            font-size: 32px;
+            font-weight: 700;
+            text-align: center;
+            line-height: 300px;
+        }
+
+        #detail .content>div {
+            display: none;
+        }
+    </style>
+    <script type="text/javascript">
+        window.onload = function() {
+            var detailDom = document.getElementById('detail');
+            var tableDoms = detailDom.querySelectorAll('.table-main li');
+            var contentItemDoms = detailDom.querySelectorAll('.content>div');
+
+            function getTableDomByName(name) {
+                for (let i = 0; i < tableDoms.length; i ++) {
+                    if (tableDoms[i].getAttribute('name') === name) {
+                        return tableDoms[i];
+                    }
+                }
+            }
+
+            function getContentItemDomByName(name) {
+                for (let i = 0; i < contentItemDoms.length; i ++) {
+                    if (contentItemDoms[i].getAttribute('name') === name) {
+                        return contentItemDoms[i];
+                    }
+                }
+            }
+
+
+            // 首个table为默认显示
+            var currentTableName = tableDoms[0].getAttribute('name');
+            tableDoms[0].classList.add('current');
+            getContentItemDomByName(currentTableName).style.display='block';
+
+            for (let i = 0; i < tableDoms.length; i ++) {
+                tableDoms[i].addEventListener('mouseover', function(event) {
+                    var index = i;
+
+                    getTableDomByName(currentTableName).classList.remove('current');
+                    getContentItemDomByName(currentTableName).style.display = 'none';
+
+                    currentTableName = tableDoms[index].getAttribute('name');
+                    tableDoms[index].classList.add('current');
+                    getContentItemDomByName(currentTableName).style.display='block';
+                });
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="detail">
+        <div class="table-main">
+            <ul>
+                <li name="intro"><a href="javascript:void(0)">商品介绍</a></li>
+                <li name="specification"><a href="javascript:void(0)">规格包装</a></li>
+                <li name="warranty"><a href="javascript:void(0)">售后保障</a></li>
+            </ul>
+        </div>
+
+        <div class="content">
+            <div name="intro">
+                商品介绍
+            </div>
+
+            <div name="specification">
+                规格包装
+            </div>
+
+            <div name="warranty">
+                售后保障
+            </div>
+        </div>
+    </div>
+</body>
+</html>

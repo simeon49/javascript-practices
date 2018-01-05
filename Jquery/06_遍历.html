@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>遍历</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+	.ancestors *{
+		display: block;
+		border: 2px solid lightgrey;
+		color: lightgrey;
+		padding: 5px;
+		margin: 15px;
+	}
+	.marked {
+		color: red;
+		border: 2px solid red;
+	}
+	</style>
+</head>
+<body>
+<div class="ancestors"> div (曾祖父)
+	<ul id="myul"> ul (祖父)
+		<li> li (直接父)
+			<span id="c1">spanC1</span>
+			<span id="c2">spanC2</span>
+			<span id="c3" marked="true">spanC3</span>
+			<span id="c4">spanC4</span>
+		</li>
+		<li> li (直接父)
+			<span id="cc1" marked="flase">spanCC1</span>
+			<span id="cc2" marked="true">spanCC2</span>
+		</li>
+	</ul>
+</div>
+<div>
+	<button id="btn1">直接父亲</button>
+	<button id="btn2">所有先祖</button>
+	<button id="btn3">介于span与div之间的先祖</button><br/>
+	<button id="btn4">ul(祖父)的孩子</button>
+	<button id="btn5">ul(祖父)type为span的后代</button><br/>
+	<button id="btn6">spanC2的同胞</button><br/>
+	<button id="btn7">spanC2的第一个同胞</button>
+	<button id="btn8">spanC2的最后一个同胞</button>
+	<button id="btn9">spanC2的第２个同胞</button><br/>
+	<button id="btn10">所有marked属性为"true"的元素</button>
+	<button id="btn11">所有marked属性为"flase"的元素</button><br/>
+</div>
+</body>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.8.0.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		// $("ul#myul #c3").addClass("marked");
+
+		$("#btn1").click(function(){
+			$("*").removeClass("marked");
+			$("span").parent().addClass("marked");
+		});
+
+		$("#btn2").click(function(){
+			$("*").removeClass("marked");
+			$("span").parents().addClass("marked");
+		});
+
+		$("#btn3").click(function(){
+			$("*").removeClass("marked");
+			$("span").parentsUntil("div").addClass("marked");
+		});
+
+		$("#btn4").click(function(){
+			$("*").removeClass("marked");
+			$("ul").children().addClass("marked");
+		});
+
+		$("#btn5").click(function(){
+			$("*").removeClass("marked");
+			$("ul").find("span").addClass("marked");
+		});
+
+		$("#btn6").click(function(){
+			$("*").removeClass("marked");
+			$("#c2").siblings().addClass("marked");
+		});
+
+		$("#btn7").click(function(){
+			$("*").removeClass("marked");
+			$("#c2").siblings().first().addClass("marked");
+		});
+
+		$("#btn8").click(function(){
+			$("*").removeClass("marked");
+			$("#c2").siblings().last().addClass("marked");
+		});
+
+		$("#btn9").click(function(){
+			$("*").removeClass("marked");
+			$("#c2").siblings().eq(1).addClass("marked");
+		});
+
+		$("#btn10").click(function(){
+			$("*").removeClass("marked");
+			$("*").filter("[marked='true']").addClass("marked");
+		});
+
+		$("#btn11").click(function(){
+			$("*").removeClass("marked");
+			$("[marked]").not("[marked='true']").addClass("marked");
+		});
+
+	});
+</script>
+</html>

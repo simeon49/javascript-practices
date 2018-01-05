@@ -1,0 +1,69 @@
+.tack-list {
+	width: 220px;
+	min-height: 240px;
+	background-color: #E3E3E3;
+	border-radius: 10px;
+	margin: 0 10px;
+	float: left;
+	text-align: center;
+	padding-bottom: 15px;
+}
+
+.tack-list input,
+.tack-list textarea {
+	width: 200px;
+	margin: 1px, 5px;
+	line-height: 21px;
+}
+
+.tack-list input {
+	height: 30px;
+}
+
+.tack-list input[type="button"] {
+	width: 200px;
+	margin: 5px;
+}
+
+#delete-div {
+	background-color: #fff;
+	border: 3px dotted #000;
+	margin: 10px;
+	height: 75px;
+	line-height: 75px;
+	text-align: center;
+}
+
+.hidden {
+	display: none;
+}
+
+.todo-task {
+	width: 200px;
+	margin: 5px;
+	border: 1px solid black;
+	background-color: white;
+	border-radius: 10px;
+	position: relative;
+}
+
+.todo-task .remove {
+    color: red;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    cursor: pointer;
+}
+
+.todo-task .task-header {
+	font-weight: bold;
+}
+
+.todo-task .task-date {
+	font-size: small;
+	font-style: italic;
+}
+
+.todo-task .task-description {
+	font-size: smaller;
+}

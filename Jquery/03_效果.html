@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>效果</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+	div {
+		margin: 0;
+		padding: 0;
+		height: 200px;
+		border: 1px solid #c5c5c5;
+		margin-bottom: 21px;
+		overflow: auto;
+	}
+	.my_button {
+		width: 100px;
+		text-align: center;
+		background: black;
+		color: white;
+		margin-top: 10px;
+		margin-left: 10px;
+		float: left;
+		cursor: pointer;
+	}
+	.move_box {
+		width: 100px;
+		height: 100px;
+		background-color: yellow;
+		float: left;
+		position:absolute;
+	}
+	</style>
+</head>
+<body>
+<div>
+	<span id="tips">
+		<p>一寸光阴一寸金，因此，我们为您提供快捷易懂的学习内容。</p>
+		<p>在这里，您可以通过一种易懂的便利的模式获得您需要的任何知识。</p>
+	</span>
+
+	<!-- 隐藏/显示 -->
+	<span id="show_hide" class="my_button">隐藏/显示</span>
+	
+	<!-- 淡入淡出 -->
+	<span id="fade" class="my_button">淡入淡出</span>
+
+	<!-- 滑动方法 -->
+	<span id="slide" class="my_button">滑动方法</span>
+</div>
+<div>
+	<span id="move_box" class="move_box">I'm Box</span><br/><br/><br/><br/><br/><br/>
+	<!-- 动画 -->
+	<span id="animate" class="my_button">动画</span>
+	<!-- 停止 -->
+	<span id="stop" class="my_button">停止</span>
+</div>
+</body>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs
+/jquery/1.4.0/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	// 隐藏/显示
+	$('#show_hide').click(function(){
+		$('#tips').toggle("slow");//show()  hide()
+	});
+
+	// 淡入淡出
+	$('#fade').click(function(){
+		$('#tips').fadeIn("3000");//fadeIn()  fadeOut() fadeToggle()
+		$("#tips").fadeTo("slow", 0.15); //渐变为给定的不透明度（值介于 0 与 1 之间）
+	});
+
+	//  滑动方法
+	$('#slide').click(function(){
+		//$("#tips").slideDown("slow");
+		// $("#tips").slideUp();
+		$("#tips").slideToggle();
+	});
+
+	// 动画
+	$('#animate').click(function(){
+		/*
+			$(selector).animate({params},speed,callback);
+			必需的 params 参数定义形成动画的 CSS 属性。
+			可选的 speed 参数规定效果的时长。它可以取以下值："slow"、"fast" 或毫秒。
+			可选的 callback 参数是动画完成后所执行的函数名称。
+			Callback 函数在当前动画 100% 完成之后执行。
+		 */
+		// $("#move_box").animate({
+		// 	left:'250px',
+		//     opacity:'0.5',
+		//     height:'+=50px',
+		//     width:'toggle'
+		// });
+
+		// var box = $("#move_box");
+		// box.animate({left:'300px'}, "100000");
+		// box.animate({fontSize:'34px'}, "50000", function(){
+		// 	alert("finish");
+		// });
+
+		// 可以写成下面这个样式
+		$("#move_box").animate({left:'300px'}, "100000")
+			.animate({fontSize:'34px'}, "50000", function(){
+				alert("finish");
+			});
+	});
+
+	// 停止
+	$('stop').click(function(){
+		/*
+		$(selector).stop(stopAll,goToEnd);
+		可选的 stopAll 参数规定是否应该清除动画队列。默认是 false，即仅停止活动的动画，允许任何排入队列的动画向后执行。
+		可选的 goToEnd 参数规定是否立即完成当前动画。默认是 false。
+		因此，默认地，stop() 会清除在被选元素上指定的当前动画。
+		 */
+		$('#move_box').stop();
+	});
+
+
+
+});
+</script>
+</html>
