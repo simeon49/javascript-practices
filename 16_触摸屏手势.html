@@ -87,7 +87,7 @@
         const $box = $(this);
         topTip('tap');
         console.log('tap');
-        // e.preventDefault();
+        e.preventDefault();
       });
 
       // 当手指放在屏幕上触发
@@ -95,7 +95,7 @@
         const $box = $(this);
         topTip('touchstart:');
         console.log('touchstart');
-        // e.preventDefault();
+        e.preventDefault();
       });
 
       // 当手指在屏幕上滑动时，连续地触发
@@ -108,7 +108,7 @@
           msg += `[手指-${i}] client:(${touch.clientX}, ${touch.clientY}), page:(${touch.pageX}, ${touch.pageY}), screen:(${touch.screenX}, ${touch.screenY})\n`;
         }
         topTip(msg);
-        // e.preventDefault();
+        e.preventDefault();
       });
 
       // touchend
