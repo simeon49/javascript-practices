@@ -82,7 +82,41 @@
     $(document).ready(function() {
       const $box = $('.box');
 
-      
+      // 当手指放在屏幕上触发
+      $box.on('tap', function(e) {
+        const $box = $(this);
+        topTip('tap');
+        console.log('tap');
+        // e.preventDefault();
+      });
+
+      // 当手指放在屏幕上触发
+      $box.on('touchstart', function (e) {
+        const $box = $(this);
+        topTip('touchstart:');
+        console.log('touchstart');
+        // e.preventDefault();
+      });
+
+      // 当手指在屏幕上滑动时，连续地触发
+      $box.on('touchmove', function (e) {
+        const $box = $(this);
+        topTip('touchmove:');
+        let msg = '';
+        for (let i = 0; i < e.touches.length; i ++) {
+          const touch = e.touches[i];
+          msg += `[手指-${i}] client:(${touch.clientX}, ${touch.clientY}), page:(${touch.pageX}, ${touch.pageY}), screen:(${touch.screenX}, ${touch.screenY})\n`;
+        }
+        topTip(msg);
+        // e.preventDefault();
+      });
+
+      // touchend
+      $box.on('touchend', function (e) {
+        const $box = $(this);
+        topTip('touchend:');
+        // e.preventDefault();
+      });
 
       // 当一个手指已经按在屏幕上，而另一个手指又触摸在屏幕时触发
       $box.on('gesturestart', function (e) {
