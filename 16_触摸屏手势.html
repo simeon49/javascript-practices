@@ -83,14 +83,6 @@
       const $box = $('.box');
 
       // 当手指放在屏幕上触发
-      $box.on('tap', function(e) {
-        const $box = $(this);
-        topTip('tap');
-        console.log('tap');
-        e.preventDefault();
-      });
-
-      // 当手指放在屏幕上触发
       $box.on('touchstart', function (e) {
         const $box = $(this);
         topTip('touchstart:');
