@@ -108,35 +108,35 @@
           msg += `[手指-${i}] client:(${touch.clientX}, ${touch.clientY}), page:(${touch.pageX}, ${touch.pageY}), screen:(${touch.screenX}, ${touch.screenY})\n`;
         }
         topTip(msg);
-        e.preventDefault();
+        // e.preventDefault();
       });
 
       // touchend
       $box.on('touchend', function (e) {
         const $box = $(this);
         topTip('touchend:');
-        e.preventDefault();
+        // e.preventDefault();
       });
 
       // 当一个手指已经按在屏幕上，而另一个手指又触摸在屏幕时触发
       $box.on('gesturestart', function (e) {
         const $box = $(this);
         topTip('gesturestart:');
-        e.preventDefault();
+        // e.preventDefault();
       });
 
       // 当触摸屏幕的任何一个手指的位置发生变化时触发
       $box.on('gesturechange', function (e) {
         const $box = $(this);
         topTip('gesturechange:');
-        e.preventDefault();
+        // e.preventDefault();
       });
 
       // 当任何一个手指从屏幕上面移开时触发
       $box.on('gestureend', function (e) {
         const $box = $(this);
         topTip('gestureend:');
-        e.preventDefault();
+        // e.preventDefault();
       });
     });
   </script>
