@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>hammer.js</title>
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+  <script src="https://cdn.bootcss.com/hammer.js/2.0.8/hammer.js"></script>
+  <style type="test/css">
+    .box {
+      margin: 30px auto;
+      width: 400px;
+      height: 200px;
+      background-color: orange;
+    }
+  </style>
+</head>
+<body>
+  <div class="box"></div>
+
+  <script>
+    let timer = null;
+    let $topTip = null;
+    function topTip(msg) {
+      if (!timer) {
+        $topTip = $('<div>');
+        $topTip.css({ 'position': 'fixed', 'top': 0, 'font-size': '14px', 'color': 'white', 'background-color': 'black' });
+        $topTip.text(msg);
+        $('body').append($topTip);
+      } else {
+        clearTimeout(timer);
+        $topTip.text(msg);
+      }
+      timer = setTimeout(function () {
+        $topTip.remove(); 
+        timer = null;
+      }, 5000);
+    }
+
+    $(document).ready(function () {
+      var hammertime = new Hammer($('.box')[0], {});
+
+      hammertime.on('tap', function (ev) {
+        console.log('tap');
+      });
+
+      hammertime.on('doubletap', function (ev) {
+        console.log('doubletap');
+      });
+
+      hammertime.on('press', function (ev) {
+        console.log('press');
+      });
+
+      hammertime.on('swipe', function (ev) {
+        console.log('swipe');
+      });
+
+      hammertime.on('pan', function (ev) {
+        console.log('pan-1');
+      });
+
+
+      hammertime.on('pan', function (ev) {
+        console.log('pan-2');
+      });
+    });
+
+    
+  </script>
+</body>
+</html>
