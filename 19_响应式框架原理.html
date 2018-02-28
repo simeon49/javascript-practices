@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>响应式框架原理</title>
+</head>
+<body>
+  <span id="counter"></span>
+
+  <button id="increase-btn">+</button>
+  <button id="decrease-btn">-</button>
+  <script>
+    /*
+      Object.defineProperty 基本特性:
+        value: 设置属性的值
+        writable: 值是否可以重写。true | false
+        enumerable: 目标属性是否可以被枚举。true | false
+        configurable: 目标属性是否可以被删除或是否可以再次修改特性 true | false
+    */
+    /*
+    const obj_0 = {};
+    Object.defineProperty(obj_0, 'k1', {
+      value: 1,
+    });
+    Object.defineProperty(obj_0, 'k2', {
+      value: 2,
+      writable: true,
+    });
+    Object.defineProperty(obj_0, 'k3', {
+      value: 3,
+      writable: true,
+      enumerable: true
+    });
+    Object.defineProperty(obj_0, 'k4', {
+      value: 4,
+      writable: true,
+      enumerable: true,
+      configurable: true
+    });
+    console.log(`obj_0=`, obj_0);
+    for (let attr in obj_0) {
+      console.log(`${attr} = ${obj_0[attr]}`);
+    }*/
+
+    const counter = document.getElementById('counter');
+    const increaseBtn = document.getElementById('increase-btn');
+    const decreaseBtn = document.getElementById('decrease-btn');
+    const obj = {
+      _counter: 0
+    };
+
+    /*
+      getter 是一种获得属性值的方法
+      setter是一种设置属性值的方法。
+
+      *(当使用了getter或setter方法，不允许使用writable和value这两个属性)
+    */
+    Object.defineProperty(obj, 'counter', {
+      get: function () { console.log('Read k1'); return obj._counter },
+      set: function (value) { console.log('Write k1:', value); obj._counter = value; counter.innerText = value; },
+      configurable: true,
+      enumerable: true,
+    });
+
+    increaseBtn.addEventListener('click', () => {
+      obj.counter += 1;
+    });
+
+    decreaseBtn.addEventListener('click', () => {
+      obj.counter -= 1;
+    });
+
+    counter.innerText = obj.counter;
+
+  </script>
+</body>
+</html>
