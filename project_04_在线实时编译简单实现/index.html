@@ -91,7 +91,7 @@ img.intLink { border: 0; }
 
 <body onload="initDoc();">
 <form name="compForm" method="post" action="sample.php" onsubmit="if(validateMode()){this.myDoc.value=oDoc.innerHTML;return true;}return false;">
-<input type="hidden" name="myDoc">
+<input  name="myDoc">
 <div id="toolBar1">
 <select onchange="formatDoc('formatblock',this[this.selectedIndex].value);this.selectedIndex=0;">
 <option selected>- formatting -</option>
