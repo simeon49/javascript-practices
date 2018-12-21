@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdn.bootcss.com/echarts/4.2.0-rc.2/echarts.min.js"></script>
+  <title>Filtering images using Web Audio API</title>
+  <style>
+    .box {
+      display: flex;
+      padding: 10px;
+      border: 2px solid #999999;
+    }
+    .controls {
+      height: 50px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+    .connect-me {
+      text-align: center;
+    }
+    .loading {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-color: rgba(0,0,0,0.45);
+    }
+    .loading>.text {
+      color: #ffffff;
+      font-size: 18px;
+      font-weight: 700;
+      margin-top: 400px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <canvas id="canvas-orig" width="400" height="400"></canvas>
+    <div id="chart-orig" style="width: 800px;height:400px;"></div>
+  </div>
+
+  <div class="controls">
+    <label>
+      过滤方式:
+      <select id="type">
+        <option value="lowpass" selected>低频过滤(保留低频)</option>
+        <option value="highpass">高频过滤(保留高频)</option>
+      </select>
+    </label>
+
+    <label>
+      频率:
+      <input id="frequency" type="number" value="400">
+    </label>
+
+    <button onClick="filterThenDraw()">执行</button>
+  </div>
+
+  <div class="connect-me">
+    <a href="https://blog.csdn.net/Qixiyi/article/details/85159981">详情看我的博客</a>
+  </div>
+
+  <div class="box">
+    <canvas id="canvas-new" width="400" height="400"></canvas>
+    <div id="chart-new" style="width: 800px;height:400px;"></div>
+  </div>
+
+  <div id="loading" class="loading">
+    <p class="text">处理中....</p>
+  </div>
+
+<script>
+  let rgbaUts = null;
+  let imgRgba = null;
+
+  class RgbaUtils {
+    constructor() {
+      this.audioContext = new AudioContext();
+    }
+
+    /**
+     *  rgba 转 unit8数组
+     */
+    static rgbaToUnit8ClampedArray(rgba) {
+      const length = Math.min(rgba.reds.length, rgba.yellows.length, rgba.blues.length)
+      , arr = new Uint8ClampedArray(length * 4);
+
+      for (let number = 0, i = 0; i < length; number +=4, i ++) {
+        arr[number + 0] = rgba.reds[i];
+        arr[number + 1] = rgba.yellows[i];
+        arr[number + 2] = rgba.blues[i];
+        arr[number + 3] = rgba.alpha;
+      }
+      return arr;
+    }
+
+    /**
+     *  unit8数组 转 rgba
+     */
+    static unit8ClampedArrayToRgba(arr) {
+      const rgba = {
+        reds: [],
+        yellows: [],
+        blues: [],
+        alpha: arr[3],
+      };
+
+      for (let i = 0; i < arr.length; i += 4) {
+        rgba.reds.push(arr[i + 0]);
+        rgba.yellows.push(arr[i + 1]);
+        rgba.blues.push(arr[i + 2]);
+      }
+      return rgba;
+    }
+
+    /**
+     *  信号处理
+     */
+    async filterSignal(signal, type, frequency) {
+      // 创建资源节点
+      const node = this.audioContext.createBufferSource();
+
+      // 将 signal 填充到资源节点中
+      const buffer = this.audioContext.createBuffer(1, signal.length, this.audioContext.sampleRate)
+        , data = buffer.getChannelData(0);
+      for (let i = 0; i < signal.length; i ++) {
+        data[i] = signal[i];
+      }
+      node.buffer = buffer;
+
+      // 创建过滤器
+      const filter = this.audioContext.createBiquadFilter();
+      filter.type = type;
+      filter.frequency.value = frequency;
+
+      // 创建处理节点
+      const processed = [];
+      const processorNode = this.audioContext.createScriptProcessor(4096, 2, 2);
+      function handle(resolve, ev) {
+        const inputBuffer = ev.inputBuffer
+          , inputData = inputBuffer.getChannelData(0)
+          , length = inputData.length;
+
+        for (let sample = 0; sample < length; sample ++) {
+          processed.push(inputData[sample]);
+        }
+        if (processed.length >= signal.length) {
+          processorNode.disconnect();
+          resolve(processed);
+        }
+      }
+      const promise = new Promise((resolve, reject) => {
+        processorNode.onaudioprocess = handle.bind(this, resolve);
+      })
+
+      node.connect(filter);
+      filter.connect(processorNode);
+      node.start(this.audioContext.currentTime);
+      return promise;
+    }
+
+    /**
+     *  rgba处理
+     */
+    async filter(rgba, type='highpass', frequency=10000) {
+      const res = await Promise.all([
+        this.filterSignal(rgba.reds, type, frequency),
+        this.filterSignal(rgba.yellows, type, frequency),
+        this.filterSignal(rgba.blues, type, frequency),
+      ]);
+
+      return {
+        reds: res[0],
+        yellows: res[1],
+        blues: res[2],
+        alpha: rgba.alpha
+      }
+    }
+
+    /**
+     *  绘制rgba
+     */
+    drawOnEchart(rgba, echartId, maxCount=400) {
+      const chart = echarts.init(document.getElementById(echartId))
+        , xData = [];
+
+      for (let i = 0; i < maxCount; i ++) {
+        xData.push(i);
+      }
+      const option = {
+        title: {
+          text: `前${maxCount}个像素点`
+        },
+        tooltip: {
+          trigger: 'axis'
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis: {
+          type: 'category',
+          boundaryGap: false,
+          data: xData,
+        },
+        yAxis: {
+          type: 'value',
+        },
+        series: [
+          {
+            name: '红',
+            type: 'line',
+            data: rgba.reds.slice(0, maxCount),
+          },
+          {
+            name: '黄',
+            type: 'line',
+            data: rgba.yellows.slice(0, maxCount),
+          },
+          {
+            name: '蓝',
+            type: 'line',
+            data: rgba.blues.slice(0, maxCount),
+          },
+        ],
+        color: ['#ff0000', '#00ff00', '#0000ff']
+      };
+      chart.setOption(option);
+    }
+  }
+
+  async function filterThenDraw() {
+    const type = document.getElementById('type').value
+      , frequency = parseInt(document.getElementById('frequency').value);
+
+    console.log(`type: ${type}, frequency: ${frequency}`);
+
+    const ldDom = document.getElementById('loading');
+    ldDom.style.display = 'block';
+
+    // 处理图像
+    const rgba = await rgbaUts.filter(imgRgba, type, frequency);
+    rgbaUts.drawOnEchart(rgba, 'chart-new');
+
+    // 绘制处理后的图像
+    const arr = RgbaUtils.rgbaToUnit8ClampedArray(rgba)
+      , cvs = document.querySelector('#canvas-new')
+      , ctx = cvs.getContext('2d')
+      , imgData = ctx.getImageData(0, 0, 400, 400);
+
+    for (let i = 0; i < imgData.data.length; i += 4) {
+      imgData.data[i + 0] = arr[i + 0];
+      imgData.data[i + 1] = arr[i + 1];
+      imgData.data[i + 2] = arr[i + 2];
+      imgData.data[i + 3] = arr[i + 3];
+    }
+    ctx.putImageData(imgData, 0, 0);
+    ldDom.style.display = 'none';
+  }
+
+  window.onload = () => {
+    rgbaUts = new RgbaUtils();
+
+    const cvs = document.querySelector('#canvas-orig')
+      , ctx = cvs.getContext('2d')
+      , img = new Image();
+
+    img.crossOrigin = '';
+    img.onload = function () {
+      ctx.drawImage(img, 0, 0, 400, 400);
+      const imgData = ctx.getImageData(0, 0, 400, 400);
+      imgRgba = RgbaUtils.unit8ClampedArrayToRgba(imgData.data);
+      rgbaUts.drawOnEchart(imgRgba, 'chart-orig');
+    }
+    img.src = 'https://cdn-images-1.medium.com/max/1600/1*34LZ-QMfVvYC_GFlDN-OYQ.jpeg';
+  };
+</script>
+</body>
+</html>
