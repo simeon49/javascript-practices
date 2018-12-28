@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 模板将会渲染到此处 -->
+  <div id="view-anchor"></div>
+<script>
+
+function getContainer(container) {
+  if (container instanceof Element) {
+    return container;
+  } else if (typeof container === 'string') {
+    return document.getElementById(container);
+  } else {
+    return;
+  }
+}
+
+class MyMV {
+  constructor(tpl, data, anchor) {
+    this.tpl = tpl;
+    this.data = data;
+    this.anchor = anchor;
+
+    this.isRender = false;
+    this.makeDataSubscripable();
+  }
+
+  makeDataSubscripable() {
+    this.data._kv = {};
+
+    Object.keys(this.data).map(key => {
+      if (key.startsWith('_')) return;
+
+      this.data._kv[key] = {
+        value: this.data[key],
+      };
+      delete this.data[key];
+
+      Object.defineProperty(this.data, key, {
+        enumerable: true,
+        set: (v) => {
+          this.data._kv[key].value = v;
+          if (this.isRender) {
+            this.render();
+          }
+        },
+        get: () => {
+          return this.data._kv[key].value;
+        }
+      });
+    });
+  }
+
+  /**
+   * 解析模板
+   */
+  parseTpl() {
+    return this.tpl.replace(/{{(.*)}}/g, (match, key) => this.data._kv[key.trim()].value );
+  }
+
+  /**
+   * 将模板渲染到dom上
+   */
+  render() {
+    const html = this.parseTpl();
+
+    this.anchor = getContainer(this.anchor);
+    if (this.anchor.firstElementChild) {
+      this.anchor.firstElementChild.remove();
+    }
+    this.anchor.innerHTML = html;
+    this.isRender = true;
+  }
+}
+
+const data = {
+  name: 'Simeon',
+  email: 'qixiyi@yeah.net'
+};
+
+const tpl = `
+<div>
+  <h1>欢迎来到<strong>{{ name }}</strong>的博客.</h1>
+  <p>我的email是: {{ email }}</p>
+</div>
+`;
+
+var myMV = new MyMV(tpl, data, 'view-anchor');
+myMV.render();
+
+</script>
+</body>
+</html>
