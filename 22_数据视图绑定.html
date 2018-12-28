@@ -61,7 +61,8 @@ class MyMV {
    * 解析模板
    */
   parseTpl() {
-    return this.tpl.replace(/{{(.*)}}/g, (match, key) => this.data._kv[key.trim()].value );
+    return this.tpl.replace(/{{(.*?)}}/g, (match, key) => { console.log(`==>${key}<==`);
+    return this.data._kv[key.trim()].value} );
   }
 
   /**
@@ -81,18 +82,23 @@ class MyMV {
 
 const data = {
   name: 'Simeon',
-  email: 'qixiyi@yeah.net'
+  url: '3s 后显示'
 };
 
 const tpl = `
 <div>
-  <h1>欢迎来到<strong>{{ name }}</strong>的博客.</h1>
-  <p>我的email是: {{ email }}</p>
+  <p>欢迎访问<strong>{{ name }}</strong>的博客.</p>
+  <p>博客地址是: <a href="{{ url }}">{{ url }}</a></p>
 </div>
 `;
 
 var myMV = new MyMV(tpl, data, 'view-anchor');
 myMV.render();
+
+setTimeout(() => {
+  data['name'] = 'SIMEON';
+  data['url'] = 'https://simeon49.github.io/blog';
+}, 3000);
 
 </script>
 </body>
