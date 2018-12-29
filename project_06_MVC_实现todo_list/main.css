@@ -1,0 +1,23 @@
+.todo-item {
+  padding: 10px;
+  border: 1px solid #999999;
+}
+
+.todo-list {
+  margin-top: 5px;
+  padding: 10px;
+  border: 1px solid #999999;
+}
+
+.todo-list .todo {
+  color: #333333;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.todo-list .todo.done {
+  color: #777777;
+  text-decoration: line-through;
+  font-weight: 400;
+}

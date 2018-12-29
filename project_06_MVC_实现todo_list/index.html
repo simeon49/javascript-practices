@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>ToDo List(MVC)</title>
+  <!-- 事件触发器 官网: https://github.com/primus/eventemitter3#readme-->
+  <script src="https://cdn.bootcss.com/eventemitter3/3.1.0/index.min.js"></script>
+  <!-- 模板引擎 官网:http://mozilla.github.io/nunjucks -->
+  <script src="https://cdn.bootcss.com/nunjucks/3.0.1/nunjucks.min.js"></script>
+  <!-- utils -->
+  <script src="./utils.js"></script>
+  <!-- 非常简单的 mvc 框架 -->
+  <script src="./mvc.js"></script>
+
+  <!-- Model -->
+  <script src="./models/todo-model.js"></script>
+
+  <!-- View -->
+  <script src="./views/todo-item-view.js"></script>
+  <script src="./views/todo-list-view.js"></script>
+
+  <!-- Controller -->
+  <script src="./controllers/todo-item-ctl.js"></script>
+  <script src="./controllers/todo-list-ctl.js"></script>
+
+  <link rel="stylesheet" href="./main.css">
+</head>
+<body>
+  <div id="app">
+    <h2>MVC 实现todo List</h2>
+
+    <!-- 视图锚点 -->
+    <div id="todo-item-anchor"></div>
+    <div id="todo-list-anchor"></div>
+  </div>
+
+  <script>
+    window.onload = function() {
+      // 模型
+      const todoModel = new TodoModel();
+
+      // todo item
+      const todoItemCtl = new TodoItemCtl(todoModel)
+        , todoItemView = new TodoItemView('todo-item-anchor', todoItemCtl, todoModel);
+      todoItemView.render();
+
+      // todo list
+      const todoListCtl = new TodoListCtl(todoModel)
+        , todoListView = new TodoListView('todo-list-anchor', todoListCtl, todoModel);
+      todoListView.render();
+    }
+  </script>
+</body>
+</html>
