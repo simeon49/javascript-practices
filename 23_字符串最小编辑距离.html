@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>字符串的最小编辑距离问题</title>
+</head>
+<body>
+  <h2>字符串的最小编辑距离问题</h2>
+  <div>
+    <strong>问题描述</strong><br>
+    <span>给定 2 个字符串 a, b. 编辑距离是将 a 转换为 b 的最少操作次数，操作只允许如下 3 种：</span><br>
+    <ul>
+      <li>插入一个字符，例如：fj -> fxj</li>
+      <li>删除一个字符，例如：fxj -> fj</li>
+      <li>替换一个字符，例如：jxj -> fyj</li>
+    </ul>
+  </div>
+  <div>
+    <label>str1=<input id="str1-input" type="text" placeholder="输入字符串1"></label><br>
+    <label>str2=<input id="str2-input" type="text" placeholder="输入字符串2"></label><br>
+    <button id="submit">计算最小编辑距离</button>
+  </div>
+  <div>
+    <ol id="steps"></ol>
+  </div>
+
+  <script>
+  function minDistanceSteps(oldStr, newStr) {
+    const lenOld = oldStr.length
+      , lenNew = newStr.length
+      , steps = [];
+
+    if (lenOld === 0) {
+      for (let i = 0; i < lenNew; i ++) {
+        const ch = newStr[i];
+        steps.push({ index: i, method: 'ADD', char: ch });
+      }
+      return steps;
+    } else if (lenNew === 0) {
+      for (let i = 0; i < lenOld; i ++) {
+        const ch = oldStr[i];
+        steps.push({ index: i, method: 'DELETE', char: ch });
+      }
+      return steps;
+    }
+    if (oldStr[lenOld - 1] === newStr[lenNew - 1]) {
+      return minDistanceSteps(oldStr.slice(0, lenOld - 1), newStr.slice(0, lenNew - 1));
+    }
+    // 插入一个字符
+    const addSteps = minDistanceSteps(oldStr, newStr.slice(0, lenNew - 1));
+    addSteps.push({ index: lenNew - 1, method: 'ADD', char: newStr[lenNew - 1]});
+
+    // 删除一个字符
+    const deleteSteps = minDistanceSteps(oldStr.slice(0, lenOld - 1), newStr);
+    deleteSteps.push({ index: lenNew, method: 'DELETE', char: oldStr[lenOld - 1]});
+
+    // 替换一个字符
+    const changeSteps = minDistanceSteps(oldStr.slice(0, lenOld - 1), newStr.slice(0, lenNew - 1));
+    changeSteps.push({ index: lenNew - 1, method: 'CHANGE', char: newStr[lenNew - 1], oldChar: oldStr[lenOld - 1]});
+
+    const minStepsCount = Math.min(addSteps.length, deleteSteps.length, changeSteps.length);
+    return addSteps.length === minStepsCount ? addSteps : (deleteSteps.length === minStepsCount ? deleteSteps : changeSteps);
+  }
+
+
+  document.getElementById('submit').onclick = function(ev) {
+    const str1 = document.getElementById('str1-input').value
+      , str2 = document.getElementById('str2-input').value;
+
+    const steps = minDistanceSteps(str1, str2);
+    const stepsDom = document.getElementById('steps');
+    stepsDom.innerHTML = '';
+    steps.forEach(step => {
+      const stepDom = document.createElement('li');
+      if (step.method === 'CHANGE') {
+        stepDom.innerHTML =  `index: ${step.index} <strong>${step.method}</strong> "${step.oldChar}" to "${step.char}"`;
+      } else {
+        stepDom.innerHTML =  `index: ${step.index} <strong>${step.method}</strong> "${step.char}"`;
+      }
+      stepsDom.appendChild(stepDom);
+    });
+  };
+  </script>
+</body>
+</html>
