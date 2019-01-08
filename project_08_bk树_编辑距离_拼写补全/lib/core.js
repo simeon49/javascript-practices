@@ -78,16 +78,18 @@ class Node {
   }
 
   search(s, maxDistance) {
-    const lst = [];
+    let lst = [];
 
     const distance = minDistanceSteps(this.word, s);
     if (distance <= maxDistance) {
       lst.push({ word: this.word, distance: distance, data: this.data });
     }
-    for (let i = 0; i < MAX_DISTANCE && distance + i <= maxDistance; i ++) {
+    // BUG! here
+    // for (let i = 0; i < MAX_DISTANCE && distance + i <= maxDistance; i ++) {
+    for (let i = 0; i < MAX_DISTANCE; i++) {
       const nodes = this.dsNodes[i];
       for (let j = 0; j < nodes.length; j ++) {
-        lst.concat(nodes[j].search(s, maxDistance));
+        lst = lst.concat(nodes[j].search(s, maxDistance));
       }
     }
     return lst;
@@ -158,8 +160,7 @@ class WordSearch {
       return [];
     }
     console.log('searching....');
-
-    const lst = this.tree.search(s, maxDistance);
+    let lst = this.tree.search(s, maxDistance);
     if (this.freeList) {
       for (let i = 0; i < this.freeList.length && lst.length < maxCount; i ++) {
         const item = this.freeList[i]
@@ -169,7 +170,9 @@ class WordSearch {
         }
       }
     }
-    console.log('finished.');
+    lst.sort((a, b) => {
+      return a.distance - b.distance;
+    });
     return lst.slice(0, maxCount);
   }
 }

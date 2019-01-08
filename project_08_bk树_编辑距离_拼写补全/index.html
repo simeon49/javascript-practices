@@ -62,7 +62,7 @@
 
         searching = true;
         const s = inputDom.value;
-        const res = wordSearch.search(s, Math.max(7, s.length / 3));
+        const res = wordSearch.search(s, 5 + parseInt(s.length / 3));
 
         wordListDom.innerHTML = '';
         res.forEach(item => {
