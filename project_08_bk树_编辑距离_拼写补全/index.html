@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="./lib/core.js"></script>
+  <title>project_08_bk树_编辑距离_拼写补全</title>
+  <style>
+    .box { width: 200px; height: 200px; margin: 0 auto; }
+    #word-list { background-color: bisque }
+    #word-list>p { margin: 0; padding: 0px 5px; width: 100%; height: 24px; box-sizing: border-box; color: #333333; font-size: 16px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+    #word-list>p>i { font-size: 12px; color: #999999 }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>拼写补全</h2>
+    <p><label>检索: <input id="input" type="text" placeholder="输入模糊检索词, 如'abc'"></label></p>
+    <p id="word-list"></p>
+  </div>
+
+  <div>
+    阅读<a href="http://www.matrix67.com/blog/?s=bk%E6%A0%91">原文</a>
+  </div>
+
+  <script>
+    /**
+     * 获取单词表
+     */
+    function getWords() {
+      const requestURL = './words.json'
+      , request = new XMLHttpRequest();
+
+      function handler (resolve, reject) {
+        resolve(JSON.parse(request.response));
+      }
+
+      request.open('GET', requestURL);
+      request.responseType = 'text';
+      const promise = new Promise((resolve, reject) => {
+        request.onload = handler.bind(this, resolve, reject);
+      });
+      request.send();
+
+      return promise;
+    }
+
+
+    window.onload = async function() {
+      const inputDom = document.getElementById('input')
+        , wordListDom = document.getElementById('word-list');
+
+      const words = await getWords();
+      const wordSearch = new WordSearch();
+      wordSearch.load(words);
+
+      window.wordSearch = wordSearch;
+      let searching = false;
+      inputDom.oninput = function(ev) {
+        if (searching) return;
+
+        searching = true;
+        const s = inputDom.value;
+        const res = wordSearch.search(s, Math.max(7, s.length / 3));
+
+        wordListDom.innerHTML = '';
+        res.forEach(item => {
+          const dom = document.createElement('p');
+
+          const indexs = [];
+          for (let i = 0; i < s.length; i ++) {
+            for (let j = 0; j < item.word.length; j ++) {
+              if (s[i] === item.word[j]) {
+                indexs.push(j);
+                break;
+              }
+            }
+          }
+
+          let html = '';
+          for (let i = 0; i < item.word.length; i ++) {
+            const ch = item.word[i];
+            if (indexs.indexOf(i) !== -1) {
+              html += `<strong>${ch}</strong>`;
+            } else {
+              html += `${ch}`;
+            }
+          }
+          html += `&nbsp;&nbsp;<i>${item.data[1]}</i>`;
+          dom.innerHTML = html;
+          wordListDom.appendChild(dom);
+        });
+        searching = false;
+      }
+
+    }
+
+  </script>
+</body>
+</html>
