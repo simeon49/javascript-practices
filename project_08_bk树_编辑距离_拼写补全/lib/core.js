@@ -32,8 +32,6 @@ function minDistanceSteps(s1, s2) {
   return matrix[len1][len2];
 }
 
-
-const MAX_DISTANCE = 5;
 /**
  * Node
  */
@@ -41,55 +39,39 @@ class Node {
   constructor(word, data) {
     this.word = word;
     this.data = data;
-    this.dsNodes = [];
-    for (let i = 0; i < MAX_DISTANCE; i ++) {
-      this.dsNodes.push([]);
-    }
+    this.dsNodesDic = {};
   }
 
   append(word, data) {
     if (this.word === word) {
       return this;
     }
-    let distance = Math.abs(word.length - this.word.length);
-    if (distance < MAX_DISTANCE) {
-      // const start = Date.now();
-      distance = minDistanceSteps(this.word, word);
-      // console.log(Date.now() - start);
+    const distance = minDistanceSteps(this.word, word);
+    const newNode = new Node(word, data);
+    if (!this.dsNodesDic[distance]) {
+      this.dsNodesDic[distance] = [];
     }
-    if (distance < MAX_DISTANCE) {
-      const newNode = new Node(word, data);
-      this.dsNodes[distance].push(newNode);
-      return newNode;
-    }
-
-    // else {
-    //   for (let t = MAX_DISTANCE - 1; t > 0; t --) {
-    //     const nodes = this.dsNodes[t];
-    //     for (let i = 0; i < nodes.length; i ++) {
-    //       const node = nodes[i];
-    //       const newNode = node.append(word, data);
-    //       if (newNode) {
-    //         return newNode;
-    //       }
-    //     }
-    //   }
-    // }
+    this.dsNodesDic[distance].push(newNode);
   }
 
   search(s, maxDistance) {
     let lst = [];
 
-    const distance = minDistanceSteps(this.word, s);
-    if (distance <= maxDistance) {
-      lst.push({ word: this.word, distance: distance, data: this.data });
+    const rootDistance = minDistanceSteps(this.word, s);
+    if (rootDistance <= maxDistance) {
+      lst.push({ word: this.word, distance: rootDistance, data: this.data });
     }
-    // BUG! here
-    // for (let i = 0; i < MAX_DISTANCE && distance + i <= maxDistance; i ++) {
-    for (let i = 0; i < MAX_DISTANCE; i++) {
-      const nodes = this.dsNodes[i];
-      for (let j = 0; j < nodes.length; j ++) {
-        lst = lst.concat(nodes[j].search(s, maxDistance));
+    for (let i = rootDistance - maxDistance; i < rootDistance + maxDistance; i ++) {
+      const nodes = this.dsNodesDic[i];
+      if (!nodes) {
+        continue;
+      }
+      for (let i = 0; i < nodes.length; i ++) {
+        const node = nodes[i];
+        const distance = minDistanceSteps(node.word, s);
+        if (distance < maxDistance) {
+          lst.push({ word: node.word, distance: distance, data: node.data });
+        }
       }
     }
     return lst;
@@ -103,50 +85,19 @@ class Node {
 class WordSearch {
   constructor() {
     this.tree = null;
-    this.freeList = null;
   }
 
   load(lst) {
-    console.log('loading word data...');
     if (!lst.length) {
       this.tree = null;
-      this.freeList = [];
       return;
     }
 
     this.tree = new Node(lst[0][0], lst[0]);
-    let newNodes = [this.tree]
-      , freeList = lst.slice(1);
-
-    let nodeCount = 1;
-    while (freeList.length > 0 && newNodes.length > 0) {
-      console.log(`freeList: ${freeList.length}, nodes: ${nodeCount}`);
-      let curNewNodes = []
-        , curFreeList = [];
-
-      for (let i = 0; i < freeList.length; i ++) {
-        const item = freeList[i];
-        let appendOK = false;
-        for (let j = 0; j < newNodes.length; j ++) {
-          const root = newNodes[j]
-            , node = root.append(item[0], item);
-          if (node) {
-            // console.log(`    ${item[0]} append to ${root.word}: ok`);
-            curNewNodes.push(node);
-            nodeCount ++;
-            appendOK = true;
-            break;
-          }
-        }
-        if (!appendOK) {
-          curFreeList.push(item);
-        }
-      }
-      newNodes = curNewNodes;
-      freeList = curFreeList;
+    for (let i = 0; i < lst.length; i ++) {
+      const item = lst[i];
+      this.tree.append(item[0], item);
     }
-    this.freeList = freeList;
-    console.log('finished.');
   }
 
 
@@ -159,20 +110,8 @@ class WordSearch {
     if (!this.tree) {
       return [];
     }
-    console.log('searching....');
     let lst = this.tree.search(s, maxDistance);
-    if (this.freeList) {
-      for (let i = 0; i < this.freeList.length && lst.length < maxCount; i ++) {
-        const item = this.freeList[i]
-          , distance = minDistanceSteps(s, item[0]);
-        if (distance <= maxDistance) {
-          lst.push({ word: item[0], distance: distance, data: item});
-        }
-      }
-    }
-    lst.sort((a, b) => {
-      return a.distance - b.distance;
-    });
+    lst.sort((a, b) => a.distance - b.distance);
     return lst.slice(0, maxCount);
   }
 }
