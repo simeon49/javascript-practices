@@ -253,6 +253,11 @@ function walkPatch(node, patchDic, index) {
   return index;
 }
 
+/**
+ * 执行更新操作
+ * @param {*} node
+ * @param {*} patch
+ */
 function doPatch(node, patch) {
   switch (patch.type) {
     case 'PROPOS':
