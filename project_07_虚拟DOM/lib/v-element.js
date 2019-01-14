@@ -2,6 +2,11 @@
  * Virtual Elemnet
  */
 class VElement {
+  /**
+   * @param {*} tagName 标签名
+   * @param {*} props 属性
+   * @param {*} children 子元素
+   */
   constructor(tagName, props, children) {
     this.tagName = tagName;
     if (props instanceof Array) {
@@ -25,6 +30,9 @@ class VElement {
     this.dom = null
   }
 
+  /**
+   * 通过js tree结构 -> 真实的DOM
+   */
   render() {
     const dom = document.createElement(this.tagName);
     for (const k in this.props) {
