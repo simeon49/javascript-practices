@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="../utils/index.js"></script>
+  <script src="./lib/v-element.js"></script>
+  <script src="./lib/v-patch.js"></script>
+  <title>虚拟DOM</title>
+</head>
+<body>
+  <!-- 锚点 -->
+  <div id="anchor"></div>
+
+  <script>
+    // 创建树
+    const tree = new VElement('div', { 'style': 'border: 3px solid #999;' }, [
+      new VElement('h1', ['虚拟Dom']),
+      new VElement('ol', [
+        new VElement('li', { 'key': 'A' }, ['A', new VElement('input')]),
+        new VElement('li', { 'key': 'B' }, ['B', new VElement('input'), new VElement('div', ['a', 'b'])]),
+        new VElement('li', { 'key': 'C' }, ['C', new VElement('input')]),
+        new VElement('li', { 'key': 'D' }, ['D', new VElement('input')]),
+      ]),
+    ]);
+
+    const dom = tree.render();
+    document.getElementById('anchor').appendChild(dom);
+
+
+    // 修改树
+    const newTree = new VElement('div', { 'style': 'border: 3px solid #999;' }, [
+      new VElement('h1', { 'style': 'color: red' }, ['虚拟Dom']),
+      new VElement('ol', [
+        new VElement('li', { 'key': 'B' }, ['B', new VElement('input'), "???"]),
+        new VElement('li', { 'key': 'D' }, ['D', new VElement('input')]),
+        new VElement('li', { 'key': 'E' }, ['E', new VElement('input')]),
+        new VElement('li', { 'key': 'A' }, ['A', new VElement('input')]),
+        new VElement('li', { 'key': 'K' }, ['K', new VElement('input')]),
+        new VElement('li', { 'key': 'F' }, ['F', new VElement('input')])
+      ]),
+    ]);
+
+    setTimeout(() => {
+      // 获取diffPatchs
+      const patchDic = diff(tree, newTree);
+      console.log(patchDic);
+
+      // 更新patch
+      updatePatch(tree, patchDic);
+    }, 3000);
+
+  </script>
+</body>
+</html>
