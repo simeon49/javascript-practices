@@ -19,7 +19,7 @@
       new VElement('h1', ['虚拟Dom']),
       new VElement('ol', [
         new VElement('li', { 'key': 'A' }, ['A', new VElement('input')]),
-        new VElement('li', { 'key': 'B' }, ['B', new VElement('input'), new VElement('div', ['a', 'b'])]),
+        new VElement('li', { 'key': 'B' }, ['B', new VElement('input')]),
         new VElement('li', { 'key': 'C' }, ['C', new VElement('input')]),
         new VElement('li', { 'key': 'D' }, ['D', new VElement('input')]),
       ]),
@@ -33,7 +33,7 @@
     const newTree = new VElement('div', { 'style': 'border: 3px solid #999;' }, [
       new VElement('h1', { 'style': 'color: red' }, ['虚拟Dom']),
       new VElement('ol', [
-        new VElement('li', { 'key': 'B' }, ['B', new VElement('input'), "???"]),
+        new VElement('li', { 'key': 'B' }, ['B', new VElement('input')]),
         new VElement('li', { 'key': 'D' }, ['D', new VElement('input')]),
         new VElement('li', { 'key': 'E' }, ['E', new VElement('input')]),
         new VElement('li', { 'key': 'A' }, ['A', new VElement('input')]),
