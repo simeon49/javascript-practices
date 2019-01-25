@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>节流与防抖</title>
+</head>
+<body>
+<script>
+  /**
+   * 函数防抖
+   *  在事件被触发n秒后再执行回调，如果在这n秒内又被触发，则重新计时
+   */
+  function debounce(fn, delay) {
+    let timer = null;
+
+    function wraper() {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        fn.apply(this, arguments)
+      }, delay);
+    }
+    return wraper;
+  }
+
+  function test1() {
+    console.log('Boom!');
+  }
+
+  const foo1 = debounce(test1, 3000);
+  let interval = setInterval(() => { foo1(); }, 500);
+  setTimeout(() => { clearInterval(interval); }, 5000);
+
+  /**
+   * 函数节流
+   *  规定一个单位时间，在这个单位时间内，只能有一次触发事件的回调函数执行，如果在同一个单位时间内某事件被触发多次，只有一次能生效。
+   */
+  function throttle(fn, delay) {
+    let timer = null;
+    let lastTime = 0;
+
+    function wraper() {
+      let curTime = new Date();
+      if (curTime - lastTime < delay) {
+        return;
+      }
+      timer = setTimeout(() => {
+        fn.apply(this, arguments);
+      }, delay);
+      lastTime = curTime;
+    }
+    return wraper;
+  }
+
+  function test2() {
+    console.log('tick.');
+  }
+
+  const foo2 = throttle(test2, 1000);
+  interval = setInterval(() => { foo2(); }, 500);
+  setTimeout(() => { clearInterval(interval); }, 5000);
+
+</script>
+</body>
+</html>
