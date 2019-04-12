@@ -12,11 +12,13 @@ class NationalFlag extends HTMLElement {
   constructor() {
     super();
     console.log('init ...');
+    this.isInint = false;
   }
 
   connectedCallback() {
     console.log('connect call back...');
     const shadowRoot = this.attachShadow({mode: 'open'});
+    // const shadowRoot = this;
     shadowRoot.innerHTML = `
     <style>
       img {
@@ -25,8 +27,9 @@ class NationalFlag extends HTMLElement {
       }
     </style>
 
-    <img src="${this.getCountryFlag(this.country)}" />
+    <img id="flag-img" src="${this.getCountryFlag(this.country)}" />
     `;
+    this.isInint = true;
   }
 
   get country() {
@@ -35,6 +38,11 @@ class NationalFlag extends HTMLElement {
 
   set country(country) {
     this.setAttribute('country', country);
+
+    if (this.isInint) {
+      const d = document.getElementById('flag-img');
+      d.src = this.getCountryFlag(this.country);
+    }
   }
 
   getCountryFlag(country) {
@@ -45,7 +53,7 @@ class NationalFlag extends HTMLElement {
   }
 }
 
-customElements.define('national-flag', NationalFlag)
+customElements.define('national-flag', NationalFlag);
 
 // document.querySelector('html').addEventListener('click', e => {
 //   console.log(e.composed);
