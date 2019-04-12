@@ -27,7 +27,7 @@ class NationalFlag extends HTMLElement {
       }
     </style>
 
-    <img id="flag-img" src="${this.getCountryFlag(this.country)}" />
+    <img src="${this.getCountryFlag(this.country)}" />
     `;
     this.isInint = true;
   }
@@ -38,11 +38,6 @@ class NationalFlag extends HTMLElement {
 
   set country(country) {
     this.setAttribute('country', country);
-
-    if (this.isInint) {
-      const d = document.getElementById('flag-img');
-      d.src = this.getCountryFlag(this.country);
-    }
   }
 
   getCountryFlag(country) {
