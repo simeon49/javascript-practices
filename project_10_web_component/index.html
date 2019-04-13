@@ -10,7 +10,7 @@
     :defined {
       font-style: italic;
     }
-    /* 全局的样式将不会对 national-flag 里的样式产生印象 */
+    /* 全局的样式将不会对 national-flag 里的样式产生影响 */
     img {
       width: 500px;
       height: 500px;
@@ -29,7 +29,9 @@
 </head>
 <body>
   <div class="flag">
-    <national-flag id="national-flag" country='America'></national-flag><br>
+    <national-flag id="national-flag" country='America'>
+      <p>国旗</p> <!-- 此处代码将在 slot 位置显示 -->
+    </national-flag><br>
 
     <p id="country-choice">选择国家旗帜:
       <label><input type="radio" name="country" value="America" checked="checked">America</label>

@@ -11,14 +11,12 @@ const _FLAGS_PATH_MAP = {
 class NationalFlag extends HTMLElement {
   constructor() {
     super();
-    console.log('init ...');
     this.isInint = false;
   }
 
   connectedCallback() {
-    console.log('connect call back...');
+    console.log('connectedCallback is called.');
     const shadowRoot = this.attachShadow({mode: 'open'});
-    // const shadowRoot = this;
     shadowRoot.innerHTML = `
     <style>
       img {
@@ -27,9 +25,14 @@ class NationalFlag extends HTMLElement {
       }
     </style>
 
-    <img src="${this.getCountryFlag(this.country)}" />
+    <img src="${this._getCountryFlag(this.country)}" />
+    <slot><slot>
     `;
     this.isInint = true;
+  }
+
+  disconnectedCallback() {
+    console.log('disconnectedCallback is called.');
   }
 
   get country() {
@@ -37,19 +40,20 @@ class NationalFlag extends HTMLElement {
   }
 
   set country(country) {
+    console.log(`set country: ${country}`);
     this.setAttribute('country', country);
     const img = this.shadowRoot.querySelector('img');
-    img.src = this.getCountryFlag(this.country);
+    img.src = this._getCountryFlag(this.country);
   }
 
-  getCountryFlag(country) {
+  _getCountryFlag(country) {
     country = country.toLowerCase();
     let path = _FLAGS_PATH_MAP[country];
     path = path ? path : _FLAGS_PATH_MAP.unknown;
     return path;
   }
 }
-
+// 定义 national-flag 标签
 customElements.define('national-flag', NationalFlag);
 
 // document.querySelector('html').addEventListener('click', e => {
