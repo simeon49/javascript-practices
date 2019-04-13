@@ -22,8 +22,8 @@ class NationalFlag extends HTMLElement {
     shadowRoot.innerHTML = `
     <style>
       img {
-        width: 50px;
-        height: 50px;
+        width: 128px;
+        height: 128px;
       }
     </style>
 
@@ -38,6 +38,8 @@ class NationalFlag extends HTMLElement {
 
   set country(country) {
     this.setAttribute('country', country);
+    const img = this.shadowRoot.querySelector('img');
+    img.src = this.getCountryFlag(this.country);
   }
 
   getCountryFlag(country) {
