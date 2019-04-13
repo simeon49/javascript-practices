@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <style>
+    #target {
+      border: 1px solid #999999;
+      padding: 10px;
+      margin: 10px;
+    }
+  </style>
+  <title>template 标签使用</title>
+</head>
+<body>
+  <div id="target">
+    template 里的内容将显示在这里
+  </div>
+
+  <template id="tmp">
+    <div>A</div>
+    <div>B</div>
+  </template>
+
+  <script>
+    const target = document.getElementById('target');
+    const tmp = document.getElementById('tmp');
+
+    target.appendChild(document.importNode(tmp.content, true));
+  </script>
+</body>
+</html>

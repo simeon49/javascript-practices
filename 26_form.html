@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>form</title>
+  <style>
+    label::after {
+      content: '';
+      display: block;
+    }
+    label>textarea,label>select {
+      vertical-align: text-top;
+    }
+  </style>
+</head>
+<body>
+  <form id="my-form" action="http://www.baidu.com" method="post">
+    <label>
+      姓名:
+      <input name="name" type="text" placeholder="please input your name.">
+    </label>
+
+    <label>
+      性别:
+      <select name="sex">
+        <option value="1">male</option>
+        <option value="2">femal</option>
+      </select>
+    </label>
+
+    <label>
+      文件:
+      <input type="file" name="file" placeholder="choice a file">
+    </label>
+
+    <label>
+      职业:
+      <input name="profession" type="radio" value="1">自由职业者
+      <input name="profession" type="radio" value="2">IT
+      <input name="profession" type="radio" value="3">无业
+    </label>
+
+    <label>
+      爱好:
+      <input name="hobby" type="checkbox" value="1">游泳
+      <input name="hobby" type="checkbox" value="2">旅行
+      <input name="hobby" type="checkbox" value="3">音乐
+    </label>
+
+    <label>
+      去过的地方:
+      <select name="places" multiple>
+        <option value="1">北京</option>
+        <option value="2">上海</option>
+        <option value="3">杭州</option>
+        <option value="4">成都</option>
+        <option value="4">大连</option>
+      </select>
+    </label>
+
+    <label>
+      备注:
+      <textarea name="text-box" cols="30" rows="10"></textarea>
+    </label>
+    <div class="btns">
+      <button name="reset-btn" type="reset">Reset</button>
+      <button name="submit-btn" type="submit">Submit</button>
+    </div>
+  </form>
+
+  <script>
+    function serialize(form) {
+      const parts = [];
+      for (let i = 0, len = form.elements.length; i < len; i++) {
+        const field = form.elements[i];
+        console.log(field.type);
+        switch (field.type) {
+          case 'select-one':
+          case 'select-multiple':
+            if (field.name.length) {
+              for (let i = 0, len = field.options.length; i < len; i ++) {
+                const option = field.options[i];
+                parts.push(field.name + '=' + option.value);
+              }
+            }
+            break;
+          case undefined:
+          case 'file':
+          case 'submit':
+          case 'reset':
+          case 'button':
+            break;
+          case 'radio':
+          case 'checkbox':
+            if (!field.checked) {
+              break;
+            }
+          default:
+          if (field.name.length) {
+            parts.push(encodeURIComponent(field.name) + '=' +
+                      encodeURIComponent(field.value));
+          }
+        }
+      }
+      return parts.join('&');
+    }
+
+    const form = document.getElementById('my-form');
+    form.addEventListener('submit', function(event) {
+      console.log(event);
+      event.preventDefault();
+
+      // 把焦点设置到当前字段
+      form.elements['sex'].focus();
+      form.elements['sex'].value = '2';
+
+      const s = serialize(form);
+      console.log(s);
+
+      const btn = form.elements['submit-btn'];
+      btn.disabled = true;
+      form.elements['reset-btn'].focus();
+    });
+  </script>
+</body>
+</html>

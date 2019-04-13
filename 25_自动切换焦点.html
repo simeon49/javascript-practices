@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>自动切换焦点</title>
+</head>
+<body>
+  <form action="/">
+    <label>Code-1<input id="code-1" type="text" pattern="\d+" name="code1" maxlength="4" required></label><br>
+    <label>Code-2<input id="code-2" type="text" name="code2" maxlength="2"></label><br>
+    <label>Code-3<input id="code-3" type="text" name="code3" maxlength="4"></label><br>
+
+    <input type="submit" value="提交">
+  </form>
+</body>
+  <script>
+    (function() {
+      function tabForward(event) {
+        console.log(event.type);
+
+        const target = event.target;
+        const form = target.form;
+
+        if (target.value.length === parseInt(target.maxLength)) {
+          for (let i = 0, len = form.elements.length; i < len; i ++) {
+            const element = form.elements[i];
+            console.log(element.name);
+            if (target === element) {
+              try {
+                form.elements[i + 1].focus();
+              } catch(err) {
+              }
+              break;
+            }
+          }
+        }
+      }
+
+      document.getElementById('code-1').addEventListener('keyup', tabForward);
+      document.getElementById('code-2').addEventListener('keyup', tabForward);
+      document.getElementById('code-3').addEventListener('keyup', tabForward);
+
+    })();
+  </script>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js实现label标签</title>
+</head>
+<body>
+  
+  <div>
+    <my-label for="input-1">点我:</my-label>
+    <input id="input-1" type="text">
+    
+    <br>
+    <my-label for="input-2">点我:</my-label>
+    <input id="input-2" type="text">
+
+  </div>
+  <script>
+    document.addEventListener('click', function (e) {
+      const target = e.target;
+      window.my_t = target;
+      if (target.nodeName.toLowerCase() === 'my-label') {
+        const forId = target.getAttribute('for');
+        if (!forId) {
+          return;
+        }
+        console.log(forId);
+        const t = document.getElementById(forId);
+        if (t) {
+          t.focus();
+        }
+      }
+    });
+  </script>
+</body>
+</html>
