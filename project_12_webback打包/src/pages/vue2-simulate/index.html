@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>模拟Vue2 的双向绑定</title>
+</head>
+<body>
+  <h2>模拟Vue2 的双向绑定</h2>
+
+  <div id="app">
+    <h2>{{title}}</h2>
+    <input type="text" v-model="name">
+    <span id="text">{{name}}</span>
+    <button v-on:click="changeTitle">改变标题</button>
+  </div>
+</body>
+</html>
