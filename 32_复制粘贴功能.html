@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>复制粘贴功能</title>
+</head>
+<body>
+  <textarea id="context" cols="32" rows="5">
+    点击下方的按钮将会复制这里的内容到剪切版中!
+  </textarea>
+  <button id="btn-copy">点击复制</button>
+
+  <script>
+    const copyBtn = document.getElementById('btn-copy');
+    const context = document.getElementById('context');
+    copyBtn.addEventListener('click', function(event) {
+      context.select();
+      document.execCommand('copy');
+    });
+  </script>
+</body>
+</html>

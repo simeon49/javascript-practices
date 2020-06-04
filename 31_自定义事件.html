@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>自定义事件</title>
+</head>
+<body>
+  <div id="box1">Box1</div>
+
+  <script>
+    const box1 = document.getElementById('box1');
+    box1.addEventListener('myEvent', function(event) {
+      console.log(`box1 ${event.type}: ${event.detail}`);
+    });
+
+    document.addEventListener('myEvent', function (event) {
+      console.log(`document ${event.type}: ${event.detail}`);
+    });
+
+    /*
+      UIEvents :一般化的 UI 事件。鼠标事件和键盘事件都继承自 UI 事件。 DOM3 级中是 UIEvent 。
+      MouseEvents :一般化的鼠标事件。DOM3 级中是 MouseEvent 。
+      MutationEvents :一般化的 DOM 变动事件。DOM3 级中是 MutationEvent 。
+      CustomEvents: 自定义事件
+    */
+    const myEvent = document.createEvent('CustomEvent');
+    /*
+      type (字符串) :触发的事件类型,例如 "keydown" 。
+      bubbles (布尔值) :表示事件是否应该冒泡。
+      cancelable (布尔值) :表示事件是否可以取消。
+      detail (对象) :任意值,保存在 event 对象的 detail 属性中。
+    */
+    myEvent.initCustomEvent('myEvent', true, true, 'custom event!');
+
+    box1.dispatchEvent(myEvent);
+
+  </script>
+</body>
+</html>

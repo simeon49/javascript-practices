@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="./components/components.js"></script>
+  <style>
+    /* 选择所有已定义的元素 */
+    :defined {
+      font-style: italic;
+    }
+    /* 全局的样式将不会对 national-flag 里的样式产生影响 */
+    img {
+      width: 500px;
+      height: 500px;
+      background: red;
+      display: block;
+    }
+    .flag {
+      text-align: center;
+      user-select: none;
+    }
+    label {
+      cursor: pointer;
+    }
+  </style>
+  <title>Web Component</title>
+</head>
+<body>
+  <div class="flag">
+    <national-flag id="national-flag" country='America'>
+      <p>国旗</p> <!-- 此处代码将在 slot 位置显示 -->
+    </national-flag><br>
+
+    <p id="country-choice">选择国家旗帜:
+      <label><input type="radio" name="country" value="America" checked="checked">America</label>
+      <label><input type="radio" name="country" value="England">England</label>
+      <label><input type="radio" name="country" value="France">France</label>
+      <label><input type="radio" name="country" value="*">Other</label>
+    </p>
+  </div>
+
+  <script>
+    document.getElementById('country-choice').addEventListener('click', ev => {
+      window['ev'] = ev;
+      if (ev.target.nodeName.toLowerCase() === 'input' && ev.target.name === 'country') {
+        document.getElementById('national-flag').country = ev.target.value;
+      }
+    })
+  </script>
+</body>
+</html>

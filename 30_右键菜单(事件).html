@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>右键菜单(事件)</title>
+</head>
+<body>
+  <script>
+    function convert(tpl) {
+      const tmp = document.createElement('div');
+      tmp.innerHTML = tpl;
+      return tmp.children;
+    }
+
+    const contextMenuTpl = `
+      <div style="visibility: hidden; position: absolute;">
+        <ul>
+          <li>A</li>
+          <li>B</li>
+          <li>C</li>
+          <li>D</li>
+        </ul>
+      </div>
+    `;
+
+    const contextMenu = convert(contextMenuTpl)[0];
+    document.body.appendChild(contextMenu);
+
+    document.addEventListener('contextmenu', function(event) {
+      contextMenu.style.left = event.clientX + 'px';
+      contextMenu.style.top = event.clientY + 'px';
+      contextMenu.style.visibility = 'visible';
+
+      event.preventDefault();
+    });
+
+    document.addEventListener('click', function(event) {
+      contextMenu.style.visibility = 'hidden';
+    });
+  </script>
+</body>
+</html>

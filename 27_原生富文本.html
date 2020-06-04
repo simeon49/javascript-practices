@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>原生富文本</title>
+</head>
+<body>
+  <iframe name="rich-edit" frameborder="0" style="width: 400px; height: 100px;border:2px solid black;"></iframe>
+
+  <script>
+    window.onload = function(event) {
+      const frame = frames['rich-edit'];
+      frame.document.designMode = 'on';
+      frame.document.execCommand('bold', false, null);
+      frame.document.execCommand('backcolor', false, 'green');
+    }
+  </script>
+
+
+  <div id="box" style="width: 400px; height: 100px; border: 2px solid green" contenteditable></div>
+  <script>
+    const box = document.getElementById('box');
+    // //转换粗体文本
+    document.execCommand('bold', false, null);
+    //转换斜体文本
+    document.execCommand("italic", false, null);
+  </script>
+</body>
+</html>
